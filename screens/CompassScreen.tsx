@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Image, View, Text, Dimensions } from 'react-native';
+import { Image, View, Text, Dimensions, StyleSheet } from 'react-native';
 import { Grid, Col, Row } from 'react-native-easy-grid';
 import { Magnetometer } from 'expo-sensors';
 import * as Location from 'expo-location';
@@ -14,7 +14,6 @@ export default function TabTwoScreen() {
   const [status, requestPermission] = Location.useForegroundPermissions();
   const [subscription, setSubscription] = useState<any>(null);
   const [magnetometer, setMagnetometer] = useState(0);
- 
 
   useEffect(() => {
     _toggle();
@@ -116,5 +115,6 @@ export default function TabTwoScreen() {
         </Col>
       </Row>
     </Grid>
+    
   );
 }
