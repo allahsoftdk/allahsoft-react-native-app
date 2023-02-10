@@ -20,7 +20,6 @@ import TabTwoScreen from '../screens/CompassScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import { getBackgroundColorAsync } from 'expo-system-ui';
-import { margin } from '@mui/system';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
