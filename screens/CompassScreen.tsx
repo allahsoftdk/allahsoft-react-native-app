@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Image, View, Text, Dimensions, StyleSheet } from 'react-native';
+import { Image, View, Text, Dimensions } from 'react-native';
 import { Grid, Col, Row } from 'react-native-easy-grid';
 import { Magnetometer } from 'expo-sensors';
 import * as Location from 'expo-location';
 import {Qibla} from 'qibla';
 
 const { height, width } = Dimensions.get('window');
-let qiblaFromTrueNorth = Qibla.degreesFromTrueNorth(55.381178973372236, 10.410297904928738);
-
-
 
 export default function TabTwoScreen() {
-  const [status, requestPermission] = Location.useForegroundPermissions();
   const [subscription, setSubscription] = useState<any>(null);
   const [magnetometer, setMagnetometer] = useState(0);
+  const [location, setLocation] = useState<LocationData | null>(null);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [latitude, setLatitude] = useState<number | null>(null);
+  const [longitude, setLongitude] = useState<number | null>(null);
 
   useEffect(() => {
     _toggle();
@@ -21,6 +21,22 @@ export default function TabTwoScreen() {
       _unsubscribe();
     };
   }, []);
+  useEffect(() => {
+    const getLocation = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLatitude(location.coords.latitude);
+      setLongitude(location.coords.longitude);
+      setLocation(location.coords);
+    };
+    getLocation();
+  }, []);
+  let qiblaFromTrueNorth = Qibla.degreesFromTrueNorth(latitude, longitude);
 
   const _toggle = () => {
     if (subscription) {
@@ -96,7 +112,6 @@ export default function TabTwoScreen() {
         }}>
           {qiblaFromTrueNorth}°
           </Text>
-
         <Col style={{ alignItems: 'center' }}>
 
           <Image source={require("../assets/images/compass_bg.png")} style={{
@@ -115,6 +130,5 @@ export default function TabTwoScreen() {
         </Col>
       </Row>
     </Grid>
-    
   );
 }
