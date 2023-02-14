@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Image, View, Text, Dimensions, Platform } from 'react-native';
+import { Image, Dimensions, Platform } from 'react-native';
+import {View, NativeBaseProvider, Box, Center, Heading, Text, FormControl, Button, HStack, Input, Link, VStack } from "native-base";
 import { Grid, Col, Row } from 'react-native-easy-grid';
 import { Magnetometer } from 'expo-sensors';
 import * as Location from 'expo-location';
@@ -18,7 +19,7 @@ export default function TabTwoScreen() {
 
   if (Platform.OS === 'web') {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View _light={{ color: 'rose.800' }} _dark={{ color: 'rose.800' }} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>Sorry, the compass dosen't work on web.</Text>
       </View>
     );
@@ -138,7 +139,7 @@ export default function TabTwoScreen() {
       </Row>
       <Row style={{ alignItems: 'center' }} size={1}>
         <Col style={{ alignItems: 'center' }}>
-          <Text style={{ color: 'Black' }}>Copyright Allahsoft</Text>
+          <Text _light={{ color: 'black' }}  _dark={{ color: 'white' }}>Copyright Allahsoft</Text>
         </Col>
       </Row>
     </Grid>
