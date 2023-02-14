@@ -3,7 +3,7 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-
+import { Link } from "native-base";
 import { FontAwesome } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
@@ -14,12 +14,13 @@ import { ColorSchemeName, Pressable, StyleSheet, Text, View, Alert } from 'react
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ModalScreen from '../screens/ModalScreen';
+import LoginScreen from '../screens/LoginScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import TabOneScreen from '../screens/Home';
-import TabTwoScreen from '../screens/CompassScreen';
+import HomeScreen from '../screens/HomeScreen';
+import CompassScreen from '../screens/CompassScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
-import { getBackgroundColorAsync } from 'expo-system-ui';
+import SignupScreen from '../screens/SignupScreen';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -42,6 +43,8 @@ function RootNavigator() {
     <Stack.Navigator>
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+      <Stack.Screen name="SignUp" component={SignupScreen} />
+      <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
@@ -60,23 +63,26 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="HomeTab"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneScreen}
-        options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
+        name="HomeTab"
+        component={HomeScreen}
+        options={({ navigation }: RootTabScreenProps<'HomeTab'>) => ({
           title: 'Home',
           tabBarIcon: ({ color }) => <FontAwesome name="home" size={35} color={color} />,
           headerRight: () => (
             <Text>
-              <View>
-                <Pressable style={styles.button} onPress={() => Alert.alert('Simple Button pressed')}>
-                  <Text style={styles.text}>Login</Text>
-                </Pressable>
-              </View>
+              <Link _text={{
+                color: "indigo.500",
+                fontWeight: "medium",
+                fontSize: "sm",
+                onPress: () => navigation.navigate('Login')
+              }} href="">
+                Sign in
+              </Link>
               <Pressable
                 onPress={() => navigation.navigate('Modal')}
                 style={({ pressed }) => ({
@@ -94,8 +100,8 @@ function BottomTabNavigator() {
         })}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoScreen}
+        name="CompassTab"
+        component={CompassScreen}
         options={{
           title: 'Compass',
           unmountOnBlur: true,
@@ -120,9 +126,9 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 5,
-    paddingLeft: 10,
-    paddingRight: 10,
+    padding: 8,
+    paddingLeft: 12,
+    paddingRight: 12,
     borderRadius: 5,
     backgroundColor: '#165d31',
     alignSelf: 'flex-start',
