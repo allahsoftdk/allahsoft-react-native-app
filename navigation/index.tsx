@@ -98,6 +98,7 @@ function BottomTabNavigator() {
         component={TabTwoScreen}
         options={{
           title: 'Compass',
+          unmountOnBlur: true,
           tabBarIcon: ({ color }) => <TabBarIcon name="compass" color={color} />,
         }}
       />

@@ -5,6 +5,7 @@ import { Magnetometer } from 'expo-sensors';
 import * as Location from 'expo-location';
 import {Qibla} from 'qibla';
 
+
 const { height, width } = Dimensions.get('window');
 
 export default function TabTwoScreen() {
@@ -58,6 +59,8 @@ export default function TabTwoScreen() {
     subscription && subscription.remove();
     setSubscription(null);
   };
+  const alpha = 0.8; // value to control the smoothing
+  let previousAngle = 0;
 
   const _angle = (magnetometer: { x: number; y: number; z: number; }) => {
     let angle = 0;
@@ -68,6 +71,8 @@ export default function TabTwoScreen() {
       } else {
         angle = (Math.atan2(y, x) + 2 * Math.PI) * (180 / Math.PI);
       }
+      angle = previousAngle * alpha + angle * (1 - alpha);
+      previousAngle = angle;
     }
     return Math.round(angle);
   };
@@ -77,12 +82,12 @@ export default function TabTwoScreen() {
   };
 
   return (
-    <Grid style={{ backgroundColor: 'black' }}>
+    <Grid style={{ backgroundColor: 'White' }}>
       <Row style={{ alignItems: 'center' }} size={.9}>
         <Col style={{ alignItems: 'center' }}>
           <Text
             style={{
-              color: '#fff',
+              color: 'Black',
               fontSize: height / 26,
               fontWeight: 'bold'
             }}>
@@ -104,7 +109,7 @@ export default function TabTwoScreen() {
 
       <Row style={{ alignItems: 'center' }} size={2}>
         <Text style={{
-          color: '#fff',
+          color: 'Black',
           fontSize: height / 27,
           width: width,
           position: 'absolute',
@@ -114,7 +119,7 @@ export default function TabTwoScreen() {
           </Text>
         <Col style={{ alignItems: 'center' }}>
 
-          <Image source={require("../assets/images/compass_bg.png")} style={{
+          <Image source={require("../assets/images/compass_light.png")} style={{
             height: width - 80,
             justifyContent: 'center',
             alignItems: 'center',
@@ -126,7 +131,7 @@ export default function TabTwoScreen() {
       </Row>
       <Row style={{ alignItems: 'center' }} size={1}>
         <Col style={{ alignItems: 'center' }}>
-          <Text style={{ color: '#fff' }}>Copyright Allahsoft</Text>
+          <Text style={{ color: 'Black' }}>Copyright Allahsoft</Text>
         </Col>
       </Row>
     </Grid>
