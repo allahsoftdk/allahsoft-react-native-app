@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Image, View, Text, Dimensions } from 'react-native';
+import { Image, View, Text, Dimensions, Platform } from 'react-native';
 import { Grid, Col, Row } from 'react-native-easy-grid';
 import { Magnetometer } from 'expo-sensors';
 import * as Location from 'expo-location';
@@ -15,6 +15,14 @@ export default function TabTwoScreen() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [latitude, setLatitude] = useState<number | null>(null);
   const [longitude, setLongitude] = useState<number | null>(null);
+
+  if (Platform.OS === 'web') {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Sorry, the compass dosen't work on web.</Text>
+      </View>
+    );
+  }
 
   useEffect(() => {
     _toggle();
@@ -118,7 +126,6 @@ export default function TabTwoScreen() {
           {qiblaFromTrueNorth}°
           </Text>
         <Col style={{ alignItems: 'center' }}>
-
           <Image source={require("../assets/images/compass_light.png")} style={{
             height: width - 80,
             justifyContent: 'center',
