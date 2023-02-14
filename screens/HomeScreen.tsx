@@ -3,7 +3,7 @@ import React from "react";
 import { View, Pressable, Alert, StyleSheet, Text } from "react-native";
 import { RootTabScreenProps } from "../types";
 
-export function HomeScreen({ navigation }: RootTabScreenProps<'HomeTab'>) {
+export function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
   return (
     <View
       style={[styles.container, { flexDirection: 'column', },]}>
