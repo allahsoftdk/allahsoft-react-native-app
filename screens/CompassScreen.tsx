@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Image, Dimensions, Platform } from 'react-native';
-import {View, NativeBaseProvider, Box, Center, Heading, Text, FormControl, Button, HStack, Input, Link, VStack } from "native-base";
+import {useColorScheme, Image, View, Text, Dimensions, Platform } from 'react-native';
 import { Grid, Col, Row } from 'react-native-easy-grid';
 import { Magnetometer } from 'expo-sensors';
 import * as Location from 'expo-location';
@@ -16,11 +15,12 @@ export default function TabTwoScreen() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [latitude, setLatitude] = useState<number | null>(null);
   const [longitude, setLongitude] = useState<number | null>(null);
+  const colorScheme = useColorScheme();
 
   if (Platform.OS === 'web') {
     return (
-      <View _light={{ color: 'rose.800' }} _dark={{ color: 'rose.800' }} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Sorry, the compass dosen't work on web.</Text>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text style={{ color: colorScheme === 'dark' ? 'white' : 'black'}}>Sorry, the compass dosen't work on web.</Text>
       </View>
     );
   }
@@ -89,6 +89,9 @@ export default function TabTwoScreen() {
   const _degree = (magnetometer: number) => {
     return magnetometer - 90 >= 0 ? magnetometer - 90 : magnetometer + 271;
   };
+  const compassImageLight = require('../assets/images/compass_light.png');
+  const compassImageDark = require('../assets/images/compass_dark.png');
+  const compassImageSource = colorScheme === 'dark' ? compassImageDark : compassImageLight;
 
   return (
     <Grid style={{ backgroundColor: 'White' }}>
@@ -96,7 +99,7 @@ export default function TabTwoScreen() {
         <Col style={{ alignItems: 'center' }}>
           <Text
             style={{
-              color: 'Black',
+              color: colorScheme === 'dark' ? 'white' : 'black',
               fontSize: height / 26,
               fontWeight: 'bold'
             }}>
@@ -115,31 +118,31 @@ export default function TabTwoScreen() {
           </View>
         </Col>
       </Row>
-
       <Row style={{ alignItems: 'center' }} size={2}>
         <Text style={{
-          color: 'Black',
+          color: colorScheme === 'dark' ? 'white' : 'black',
           fontSize: height / 27,
           width: width,
           position: 'absolute',
           textAlign: 'center'
         }}>
           {qiblaFromTrueNorth}°
-          </Text>
+          </Text> 
         <Col style={{ alignItems: 'center' }}>
-          <Image source={require("../assets/images/compass_light.png")} style={{
+          <Image 
+          source={compassImageSource} 
+          style={{
             height: width - 80,
             justifyContent: 'center',
             alignItems: 'center',
             resizeMode: 'contain',
             transform: [{ rotate: 360 - magnetometer + 'deg' }]
           }} />
-
         </Col>
       </Row>
       <Row style={{ alignItems: 'center' }} size={1}>
         <Col style={{ alignItems: 'center' }}>
-          <Text _light={{ color: 'black' }}  _dark={{ color: 'white' }}>Copyright Allahsoft</Text>
+          <Text style={{ color: colorScheme === 'dark' ? 'white' : 'black'}}>Copyright Allahsoft</Text>
         </Col>
       </Row>
     </Grid>
