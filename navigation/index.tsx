@@ -63,14 +63,14 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="HomeTab"
+      initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
-        name="HomeTab"
+        name="Home"
         component={HomeScreen}
-        options={({ navigation }: RootTabScreenProps<'HomeTab'>) => ({
+        options={({ navigation }: RootTabScreenProps<'Home'>) => ({
           title: 'Home',
           tabBarIcon: ({ color }) => <FontAwesome name="home" size={35} color={color} />,
           headerRight: () => (
@@ -100,11 +100,10 @@ function BottomTabNavigator() {
         })}
       />
       <BottomTab.Screen
-        name="CompassTab"
+        name="Compass"
         component={CompassScreen}
         options={{
           title: 'Compass',
-          unmountOnBlur: true,
           tabBarIcon: ({ color }) => <TabBarIcon name="compass" color={color} />,
         }}
       />
