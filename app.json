@@ -19,7 +19,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "We need your location to show you the qibla direcion.",
+        "NSLocationWhenInUseUsageDescription": "We need your location to show you the qibla direcion."
+      }
+    },
+    "infoPlist": {
+      "NSLocationAlwaysAndWhenInUseUsageDescription": "We need your location to show you the qibla direcion.",
+      "NSLocationWhenInUseUsageDescription": "We need your location to show you the qibla direcion."
     },
     "android": {
       "adaptiveIcon": {
