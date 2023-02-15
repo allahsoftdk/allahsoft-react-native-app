@@ -17,10 +17,16 @@ import ModalScreen from '../screens/ModalScreen';
 import LoginScreen from '../screens/LoginScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import HomeScreen from '../screens/HomeScreen';
+import ForumScreen from '../screens/ForumScreen';
+import QuranScreen from '../screens/QuranScreen';
+import EventScreen from '../screens/EventScreen';
 import CompassScreen from '../screens/CompassScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import SignupScreen from '../screens/SignupScreen';
+import ForgotScreen from "../screens/ForgotScreen";
+import AlarmScreen from "../screens/AlarmScreen";
+import MapScreen from "../screens/MapScreen";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -43,8 +49,16 @@ function RootNavigator() {
     <Stack.Navigator>
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-      <Stack.Screen name="SignUp" component={SignupScreen} />
-      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="SignUpTab" component={SignupScreen} />
+      <Stack.Screen name="LoginTab" component={LoginScreen} />
+      <Stack.Screen name="ForgotTab" component={ForgotScreen} />
+      <Stack.Screen name="HomeTab" component={HomeScreen} />
+      <Stack.Screen name="CompassTab" component={CompassScreen} />
+      <Stack.Screen name="ForumTab" component={ForumScreen} />
+      <Stack.Screen name="QuranTab" component={QuranScreen} />
+      <Stack.Screen name="AlarmTab" component={AlarmScreen} />
+      <Stack.Screen name="MapTab" component={MapScreen} />
+      <Stack.Screen name="EventTab" component={EventScreen} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
@@ -63,14 +77,22 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="Home"
+      initialRouteName="HomeTab"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
-        name="Home"
+        name="ForumTab"
+        component={ForumScreen}
+        options={{
+          title: 'Forum',
+          tabBarIcon: ({ color }) => <TabBarIcon name="comments" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="HomeTab"
         component={HomeScreen}
-        options={({ navigation }: RootTabScreenProps<'Home'>) => ({
+        options={({ navigation }: RootTabScreenProps<'HomeTab'>) => ({
           title: 'Home',
           tabBarIcon: ({ color }) => <FontAwesome name="home" size={35} color={color} />,
           headerRight: () => (
@@ -79,7 +101,7 @@ function BottomTabNavigator() {
                 color: "indigo.500",
                 fontWeight: "medium",
                 fontSize: "sm",
-                onPress: () => navigation.navigate('Login')
+                onPress: () => navigation.navigate('LoginTab')
               }} href="">
                 Sign in
               </Link>
@@ -100,14 +122,16 @@ function BottomTabNavigator() {
         })}
       />
       <BottomTab.Screen
-        name="Compass"
-        component={CompassScreen}
+        name="QuranTab"
+        component={QuranScreen}
         options={{
-          title: 'Compass',
-          tabBarIcon: ({ color }) => <TabBarIcon name="compass" color={color} />,
+          title: 'Quran',
+          tabBarIcon: ({ color }) => <TabBarIcon name="book" color={color} />,
         }}
       />
+
     </BottomTab.Navigator>
+
   );
 }
 
