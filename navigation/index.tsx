@@ -27,6 +27,7 @@ import SignupScreen from '../screens/SignupScreen';
 import ForgotScreen from "../screens/ForgotScreen";
 import AlarmScreen from "../screens/AlarmScreen";
 import MapScreen from "../screens/MapScreen";
+import HijriScreen from "../screens/HijriScreen";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -58,6 +59,7 @@ function RootNavigator() {
       <Stack.Screen name="QuranTab" component={QuranScreen} />
       <Stack.Screen name="AlarmTab" component={AlarmScreen} />
       <Stack.Screen name="MapTab" component={MapScreen} />
+      <Stack.Screen name="HijriTab" component={HijriScreen} />
       <Stack.Screen name="EventTab" component={EventScreen} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />

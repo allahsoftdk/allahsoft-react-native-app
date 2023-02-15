@@ -72,7 +72,7 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
             </Pressable>
           </Box>
           <Box alignItems="center">
-            <Pressable onPress={() => navigation.navigate('CompassTab')}  >
+            <Pressable onPress={() => navigation.navigate('HijriTab')}  >
               <Box alignItems="center" >
                 <FontAwesome name="hourglass-half" size={100} color="#165d31" />
                 <Text> Hijri Converter </Text>

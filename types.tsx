@@ -27,6 +27,7 @@ export type RootStackParamList = {
   AlarmTab: undefined;
   EventTab: undefined;
   MapTab: undefined;
+  HijriTab: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
@@ -45,6 +46,8 @@ export type RootTabParamList = {
   AlarmTab: undefined;
   EventTab: undefined;
   MapTab: undefined;
+  HijriTab: undefined;
+
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<
