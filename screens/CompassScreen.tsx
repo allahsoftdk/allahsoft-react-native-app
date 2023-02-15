@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {useColorScheme, Image, View, Text, Dimensions, Platform } from 'react-native';
+import {useColorScheme, Image, View, Text, Dimensions, Platform, Vibration } from 'react-native';
 import { Grid, Col, Row } from 'react-native-easy-grid';
 import { Magnetometer } from 'expo-sensors';
 import * as Location from 'expo-location';
@@ -97,8 +97,13 @@ export default function TabTwoScreen() {
 
   const compassNormal = require('../assets/images/compass_pointer.png');
   const compassOnPoint = require('../assets/images/compass_pointer_qibla.png');
-  //a const that checks if the magnetometer is pointing to the qibla
   const isOnPoint = Math.abs(_degree(magnetometer) - qiblaFromTrueNorth) < 5;
+
+  useEffect(() => {
+    if (isOnPoint) {
+      Vibration.vibrate();
+    }
+  }, [isOnPoint]);
 
   return (
     <Grid style={{ backgroundColor: 'White' }}>
