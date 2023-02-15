@@ -31,11 +31,12 @@ export default function TabTwoScreen() {
       _unsubscribe();
     };
   }, []);
+
   useEffect(() => {
     const getLocation = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
+        setErrorMsg('Please enable location to see Qibla direction.');
         return;
       }
 
@@ -45,6 +46,7 @@ export default function TabTwoScreen() {
       setLocation(location.coords);
     };
     getLocation();
+    
   }, []);
   let qiblaFromTrueNorth = Qibla.degreesFromTrueNorth(latitude, longitude);
 
@@ -68,7 +70,7 @@ export default function TabTwoScreen() {
     subscription && subscription.remove();
     setSubscription(null);
   };
-  const alpha = 0.8; // value to control the smoothing
+  const alpha = 0.5; // value to control the smoothing
   let previousAngle = 0;
 
   const _angle = (magnetometer: { x: number; y: number; z: number; }) => {
@@ -93,6 +95,11 @@ export default function TabTwoScreen() {
   const compassImageDark = require('../assets/images/compass_dark.png');
   const compassImageSource = colorScheme === 'dark' ? compassImageDark : compassImageLight;
 
+  const compassNormal = require('../assets/images/compass_pointer.png');
+  const compassOnPoint = require('../assets/images/compass_pointer_qibla.png');
+  //a const that checks if the magnetometer is pointing to the qibla
+  const isOnPoint = Math.abs(_degree(magnetometer) - qiblaFromTrueNorth) < 5;
+
   return (
     <Grid style={{ backgroundColor: 'White' }}>
       <Row style={{ alignItems: 'center' }} size={.9}>
@@ -107,14 +114,11 @@ export default function TabTwoScreen() {
           </Text>
         </Col>
       </Row>
-
       <Row style={{ alignItems: 'center' }} size={.1}>
         <Col style={{ alignItems: 'center' }}>
-          <View style={{ position: 'absolute', width: width, alignItems: 'center', top: 0 }}>
-            <Image source={require('../assets/images/compass_pointer.png')} style={{
-              height: height / 26,
-              resizeMode: 'contain'
-            }} />
+          <View style={{ position: 'absolute', width: width, alignItems: 'center', top: -30 }}>
+            <Image source={isOnPoint ? compassOnPoint : compassNormal}
+             style={{ height: 60, width: 60, resizeMode: 'contain' }} />
           </View>
         </Col>
       </Row>
@@ -126,7 +130,7 @@ export default function TabTwoScreen() {
           position: 'absolute',
           textAlign: 'center'
         }}>
-          {qiblaFromTrueNorth}°
+           {errorMsg !== null && errorMsg !== undefined ? 'N/A' : `${qiblaFromTrueNorth}°`}
           </Text> 
         <Col style={{ alignItems: 'center' }}>
           <Image 
@@ -142,7 +146,7 @@ export default function TabTwoScreen() {
       </Row>
       <Row style={{ alignItems: 'center' }} size={1}>
         <Col style={{ alignItems: 'center' }}>
-          <Text style={{ color: colorScheme === 'dark' ? 'white' : 'black'}}>Copyright Allahsoft</Text>
+          <Text style={{ color: colorScheme === 'dark' ? 'white' : 'black'}}>{errorMsg ?? `Copyright Allahsoft`}</Text>
         </Col>
       </Row>
     </Grid>
