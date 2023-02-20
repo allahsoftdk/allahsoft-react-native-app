@@ -13,6 +13,7 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
                 <Stack space={2}>
                   <Heading size="md" ml="-1">
                     <FontAwesome name="bell" size={20} color="#165d31" />
+                    <Stack p="1" space={1}></Stack>
                     Upcoming Alarms
                   </Heading>
                 </Stack>
@@ -21,6 +22,7 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
                   <HStack alignItems="center">
                     <Link _text={{ color: "indigo.500", fontWeight: "medium", fontSize: "sm", onPress: () => navigation.navigate('AlarmTab') }} href="">
                       <FontAwesome name="eye" size={20} color="#165d31" />
+                      <Stack p="1" space={1}></Stack>
                       View All
                     </Link>
                   </HStack>
@@ -36,6 +38,7 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
                 <Stack space={2}>
                   <Heading size="md" ml="-1">
                     <FontAwesome name="calendar" size={20} color="#165d31" />
+                    <Stack p="1" space={1}></Stack>
                     Upcoming Events
                   </Heading>
                 </Stack>
@@ -44,6 +47,7 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
                   <HStack alignItems="center">
                     <Link _text={{ color: "indigo.500", fontWeight: "medium", fontSize: "sm", onPress: () => navigation.navigate('EventTab') }} href="">
                       <FontAwesome name="eye" size={20} color="#165d31" />
+                      <Stack p="1" space={1}></Stack>
                       View All
                     </Link>
                   </HStack>
