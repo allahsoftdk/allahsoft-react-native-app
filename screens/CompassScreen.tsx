@@ -1,9 +1,10 @@
+// @ts-nocheck
 import React, { useState, useEffect } from 'react';
-import {useColorScheme, Image, View, Text, Dimensions, Platform, Vibration } from 'react-native';
+import { useColorScheme, Image, View, Text, Dimensions, Platform, Vibration } from 'react-native';
 import { Grid, Col, Row } from 'react-native-easy-grid';
 import { Magnetometer } from 'expo-sensors';
 import * as Location from 'expo-location';
-import {Qibla} from 'qibla';
+import { Qibla } from 'qibla';
 
 
 const { height, width } = Dimensions.get('window');
@@ -20,7 +21,7 @@ export default function TabTwoScreen() {
   if (Platform.OS === 'web') {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ color: colorScheme === 'dark' ? 'white' : 'black'}}>Sorry, the compass dosen't work on web.</Text>
+        <Text style={{ color: colorScheme === 'dark' ? 'white' : 'black' }}>Sorry, the compass dosen't work on web.</Text>
       </View>
     );
   }
@@ -46,7 +47,7 @@ export default function TabTwoScreen() {
       setLocation(location.coords);
     };
     getLocation();
-    
+
   }, []);
   let qiblaFromTrueNorth = Qibla.degreesFromTrueNorth(latitude, longitude);
 
@@ -123,7 +124,7 @@ export default function TabTwoScreen() {
         <Col style={{ alignItems: 'center' }}>
           <View style={{ position: 'absolute', width: width, alignItems: 'center', top: -30 }}>
             <Image source={isOnPoint ? compassOnPoint : compassNormal}
-             style={{ height: 60, width: 60, resizeMode: 'contain' }} />
+              style={{ height: 60, width: 60, resizeMode: 'contain' }} />
           </View>
         </Col>
       </Row>
@@ -135,23 +136,23 @@ export default function TabTwoScreen() {
           position: 'absolute',
           textAlign: 'center'
         }}>
-           {errorMsg !== null && errorMsg !== undefined ? 'N/A' : `${qiblaFromTrueNorth}°`}
-          </Text> 
+          {errorMsg !== null && errorMsg !== undefined ? 'N/A' : `${qiblaFromTrueNorth}°`}
+        </Text>
         <Col style={{ alignItems: 'center' }}>
-          <Image 
-          source={compassImageSource} 
-          style={{
-            height: width - 80,
-            justifyContent: 'center',
-            alignItems: 'center',
-            resizeMode: 'contain',
-            transform: [{ rotate: 360 - magnetometer + 'deg' }]
-          }} />
+          <Image
+            source={compassImageSource}
+            style={{
+              height: width - 80,
+              justifyContent: 'center',
+              alignItems: 'center',
+              resizeMode: 'contain',
+              transform: [{ rotate: 360 - magnetometer + 'deg' }]
+            }} />
         </Col>
       </Row>
       <Row style={{ alignItems: 'center' }} size={1}>
         <Col style={{ alignItems: 'center' }}>
-          <Text style={{ color: colorScheme === 'dark' ? 'white' : 'black'}}>{errorMsg ?? `Copyright Allahsoft`}</Text>
+          <Text style={{ color: colorScheme === 'dark' ? 'white' : 'black' }}>{errorMsg ?? `Copyright Allahsoft`}</Text>
         </Col>
       </Row>
     </Grid>
