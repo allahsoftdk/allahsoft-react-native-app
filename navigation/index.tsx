@@ -28,6 +28,8 @@ import ForgotScreen from "../screens/ForgotScreen";
 import AlarmScreen from "../screens/AlarmScreen";
 import MapScreen from "../screens/MapScreen";
 import HijriScreen from "../screens/HijriScreen";
+import ChatScreen from "../screens/ChatScreen";
+import MessageScreen from "../screens/MessageScreen";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -64,6 +66,8 @@ function RootNavigator() {
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
+      <Stack.Screen name="ChatTab" component={ChatScreen} />
+      <Stack.Screen name="MessageTab" component={MessageScreen} />
     </Stack.Navigator>
   );
 }

@@ -28,6 +28,8 @@ export type RootStackParamList = {
   EventTab: undefined;
   MapTab: undefined;
   HijriTab: undefined;
+  ChatTab: undefined;
+  MessageTab: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
@@ -47,6 +49,8 @@ export type RootTabParamList = {
   EventTab: undefined;
   MapTab: undefined;
   HijriTab: undefined;
+  ChatTab: undefined;
+  MessageTab: undefined;
 
 };
 
@@ -54,3 +58,17 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> = Composit
   BottomTabScreenProps<RootTabParamList, Screen>,
   NativeStackScreenProps<RootStackParamList>
 >;
+
+export type ChatMessage = {
+  chatRoomId: number;
+  userId: number;
+  message: string;
+  createdAt: Date;
+};
+
+export type ChatRoom = {
+  id: string;
+  name: string;
+  chatMessages: ChatMessage[];
+};
+
