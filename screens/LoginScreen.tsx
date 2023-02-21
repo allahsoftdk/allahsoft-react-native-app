@@ -8,8 +8,10 @@ const LoginScreen = ({ navigation }: { navigation: any }) => {
         <NativeBaseProvider>
             <Center w="100%">
                 <Box safeArea p="2" py="8" w="90%" maxW="290">
-                    <Heading size="lg" fontWeight="600" color="coolGray.50" _dark={{ color: "warmGray.800" }}>
-                        Qibla Compass
+                    <Heading size="lg" fontWeight="600" style={{
+                        color: colorScheme === 'dark' ? 'white' : 'black',
+                    }} >
+                        Sign in to your account
                     </Heading>
                     <VStack space={3} mt="5">
                         <FormControl>

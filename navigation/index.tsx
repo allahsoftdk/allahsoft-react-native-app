@@ -51,7 +51,7 @@ function RootNavigator() {
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Screen name="SignUpTab" component={SignupScreen} />
-      <Stack.Screen name="LoginTab" component={LoginScreen} />
+      <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="ForgotTab" component={ForgotScreen} />
       <Stack.Screen name="HomeTab" component={HomeScreen} />
       <Stack.Screen name="CompassTab" component={CompassScreen} />
@@ -103,9 +103,9 @@ function BottomTabNavigator() {
                 color: "indigo.500",
                 fontWeight: "medium",
                 fontSize: "sm",
-                onPress: () => navigation.navigate('LoginTab')
+                onPress: () => navigation.navigate('Login')
               }} href="">
-                Sign in
+                Login
               </Link>
               <Pressable
                 onPress={() => navigation.navigate('Modal')}
