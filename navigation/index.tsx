@@ -3,13 +3,15 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { Link } from "native-base";
+import { Button } from "native-base";
 import { FontAwesome } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme, DarkTheme, useFocusEffect } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName, Pressable, StyleSheet, Text, View, Alert } from 'react-native';
+import { ColorSchemeName, StyleSheet, Alert } from 'react-native';
+import { Box, Center, Container, Heading, HStack, Link, Pressable, Row, Text, View } from 'native-base';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -31,6 +33,8 @@ import HijriScreen from "../screens/HijriScreen";
 import ChatScreen from "../screens/ChatScreen";
 import MessageScreen from "../screens/MessageScreen";
 
+import axiosInstance from "../utils/axios";
+
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
     <NavigationContainer
@@ -40,6 +44,8 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
     </NavigationContainer>
   );
 }
+
+
 
 /**
  * A root stack navigator is often used for displaying modals on top of all other content.
@@ -80,6 +86,41 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
+  const [loggedIn, setLoggedIn] = React.useState(false);
+
+  const checkLoggedIn = async () => {
+    const user = await AsyncStorage.getItem('user');
+    if (user) {
+      setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
+    }
+  };
+
+  const logOut = async () => {
+      axiosInstance.post("/api/auth/logout").then(async (res) => {
+        await AsyncStorage.removeItem('user');
+        await checkLoggedIn();
+    }).catch((err) => {
+        console.log(err);
+    });
+  };
+
+  // run checkLoggedIn on navigation
+  useFocusEffect(
+    React.useCallback(() => {
+      let isActive = true;
+      const check = async () => {
+        await checkLoggedIn();
+      };
+      if (isActive) {
+        check();
+      }
+      return () => {
+        isActive = false;
+      };
+    }, [])
+  );
 
   return (
     <BottomTab.Navigator
@@ -102,28 +143,30 @@ function BottomTabNavigator() {
           title: 'Home',
           tabBarIcon: ({ color }) => <FontAwesome name="home" size={35} color={color} />,
           headerRight: () => (
-            <Text>
-              <Link _text={{
-                color: "indigo.500",
+            <View style={{ flexDirection: 'row' }}>
+              <Button
+              bg={"green.500"} 
+              _text={{
+                color: colorScheme === 'dark' ? 'white' : 'black',
                 fontWeight: "medium",
                 fontSize: "sm",
-                onPress: () => navigation.navigate('LoginTab')
-              }} href="">
-                Sign in
-              </Link>
-              <Pressable
+                onPress: () => loggedIn ? logOut() : navigation.navigate('LoginTab')
+              }}>
+                {loggedIn ? 'Logout' : 'Login'}
+              </Button>
+              {loggedIn ? <Pressable
                 onPress={() => navigation.navigate('Modal')}
                 style={({ pressed }) => ({
                   opacity: pressed ? 0.5 : 1,
                 })}>
                 <FontAwesome
-                  name="info-circle"
+                  name="gear"
                   size={25}
                   color={Colors[colorScheme].text}
-                  style={{ marginRight: 15 }}
+                  style={{ marginRight: 10, marginLeft: 15, padding: 5 }}
                 />
-              </Pressable>
-            </Text>
+              </Pressable> : <View style={{marginRight: 20, marginLeft: 25, padding: 5}}></View>}
+            </View>
           ),
         })}
       />
