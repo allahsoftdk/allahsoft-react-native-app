@@ -1,8 +1,10 @@
 import { FontAwesome } from '@expo/vector-icons';
 import { Box, Center, Container, Heading, HStack, Link, Pressable, Row, Stack, Text, View } from 'native-base';
+import { useColorScheme } from 'react-native';
 import React from "react";
 
 const HomeScreen = ({ navigation }: { navigation: any }) => {
+  const colorScheme = useColorScheme();
   return (
     <Center>
       <Container>
@@ -62,7 +64,9 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
             <Pressable onPress={() => navigation.navigate('CompassTab')}  >
               <Box alignItems="center" >
                 <FontAwesome name="compass" size={100} color="#165d31" />
-                <Text> Qibla Compass </Text>
+                <Text style={{
+                  color: colorScheme === 'dark' ? 'white' : 'black',
+                }}> Qibla Compass </Text>
               </Box>
             </Pressable>
           </Box>
@@ -71,7 +75,9 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
             <Pressable onPress={() => navigation.navigate('MapTab')}  >
               <Box alignItems="center" >
                 <FontAwesome name="map" size={100} color="#165d31" />
-                <Text> Mosque Map </Text>
+                <Text style={{
+                  color: colorScheme === 'dark' ? 'white' : 'black',
+                }}> Mosque Map </Text>
               </Box>
             </Pressable>
           </Box>
@@ -79,7 +85,9 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
             <Pressable onPress={() => navigation.navigate('HijriTab')}  >
               <Box alignItems="center" >
                 <FontAwesome name="hourglass-half" size={100} color="#165d31" />
-                <Text> Hijri Converter </Text>
+                <Text style={{
+                  color: colorScheme === 'dark' ? 'white' : 'black',
+                }}> Hijri Converter </Text>
               </Box>
             </Pressable>
           </Box>
