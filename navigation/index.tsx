@@ -34,6 +34,7 @@ import ChatScreen from "../screens/ChatScreen";
 import MessageScreen from "../screens/MessageScreen";
 
 import axiosInstance from "../utils/axios";
+import checkLoggedIn from "../utils/checkLogIn";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -58,22 +59,22 @@ function RootNavigator() {
     <Stack.Navigator>
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-      <Stack.Screen name="SignUpTab" component={SignupScreen} />
-      <Stack.Screen name="LoginTab" component={LoginScreen} />
-      <Stack.Screen name="ForgotTab" component={ForgotScreen} />
-      <Stack.Screen name="HomeTab" component={HomeScreen} />
-      <Stack.Screen name="CompassTab" component={CompassScreen} />
-      <Stack.Screen name="ForumTab" component={ForumScreen} />
-      <Stack.Screen name="QuranTab" component={QuranScreen} />
-      <Stack.Screen name="AlarmTab" component={AlarmScreen} />
-      <Stack.Screen name="MapTab" component={MapScreen} />
-      <Stack.Screen name="HijriTab" component={HijriScreen} />
-      <Stack.Screen name="EventTab" component={EventScreen} />
+      <Stack.Screen name="SignUpTab" component={SignupScreen} options={{ title: 'Sign Up' }} />
+      <Stack.Screen name="LoginTab" component={LoginScreen} options={{ title: 'Login' }} />
+      <Stack.Screen name="ForgotTab" component={ForgotScreen} options={{ title: 'Forgot Password' }} />
+      <Stack.Screen name="HomeTab" component={HomeScreen} options={{ title: 'Home' }} />
+      <Stack.Screen name="CompassTab" component={CompassScreen} options={{ title: 'Compass' }} />
+      <Stack.Screen name="ForumTab" component={ForumScreen} options={{ title: 'Forum' }} />
+      <Stack.Screen name="QuranTab" component={QuranScreen} options={{ title: 'Quran' }} />
+      <Stack.Screen name="AlarmTab" component={AlarmScreen} options={{ title: 'Prayer Alarms' }} />
+      <Stack.Screen name="MapTab" component={MapScreen} options={{ title: 'Mosque Map' }} />
+      <Stack.Screen name="HijriTab" component={HijriScreen} options={{ title: 'Hijri Calendar' }} />
+      <Stack.Screen name="EventTab" component={EventScreen} options={{ title: 'Events' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
-      <Stack.Screen name="ChatTab" component={ChatScreen} />
-      <Stack.Screen name="MessageTab" component={MessageScreen} />
+      <Stack.Screen name="ChatTab" component={ChatScreen} options={{ title: 'Chat' }} />
+      <Stack.Screen name="MessageTab" component={MessageScreen} options={{ title: 'Messages' }} />
     </Stack.Navigator>
   );
 }
@@ -88,21 +89,12 @@ function BottomTabNavigator() {
   const colorScheme = useColorScheme();
   const [loggedIn, setLoggedIn] = React.useState(false);
 
-  const checkLoggedIn = async () => {
-    const user = await AsyncStorage.getItem('user');
-    if (user) {
-      setLoggedIn(true);
-    } else {
-      setLoggedIn(false);
-    }
-  };
-
   const logOut = async () => {
-      axiosInstance.post("/api/auth/logout").then(async (res) => {
-        await AsyncStorage.removeItem('user');
-        await checkLoggedIn();
+    axiosInstance.post("/api/auth/logout").then(async (res) => {
+      await AsyncStorage.removeItem('user');
+      await checkLoggedIn(setLoggedIn);
     }).catch((err) => {
-        console.log(err);
+      console.log(err);
     });
   };
 
@@ -111,7 +103,7 @@ function BottomTabNavigator() {
     React.useCallback(() => {
       let isActive = true;
       const check = async () => {
-        await checkLoggedIn();
+        await checkLoggedIn(setLoggedIn);
       };
       if (isActive) {
         check();
@@ -145,13 +137,13 @@ function BottomTabNavigator() {
           headerRight: () => (
             <View style={{ flexDirection: 'row' }}>
               <Button
-              bg={"green.500"} 
-              _text={{
-                color: colorScheme === 'dark' ? 'white' : 'black',
-                fontWeight: "medium",
-                fontSize: "sm",
-                onPress: () => loggedIn ? logOut() : navigation.navigate('LoginTab')
-              }}>
+                bg={"green.500"}
+                _text={{
+                  color: colorScheme === 'dark' ? 'white' : 'black',
+                  fontWeight: "medium",
+                  fontSize: "sm",
+                  onPress: () => loggedIn ? logOut() : navigation.navigate('LoginTab')
+                }}>
                 {loggedIn ? 'Logout' : 'Login'}
               </Button>
               {loggedIn ? <Pressable
@@ -165,7 +157,7 @@ function BottomTabNavigator() {
                   color={Colors[colorScheme].text}
                   style={{ marginRight: 10, marginLeft: 15, padding: 5 }}
                 />
-              </Pressable> : <View style={{marginRight: 20, marginLeft: 25, padding: 5}}></View>}
+              </Pressable> : <View style={{ marginRight: 20, marginLeft: 25, padding: 5 }}></View>}
             </View>
           ),
         })}

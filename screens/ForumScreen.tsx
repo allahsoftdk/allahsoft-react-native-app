@@ -8,27 +8,20 @@ import { NavigationContainer, useFocusEffect } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import checkLoggedIn from "../utils/checkLogIn";
+
 const Stack = createNativeStackNavigator();
 
 const ForumScreen = ({ navigation }: { navigation: any }) => {
     const colorScheme = useColorScheme();
     const [loggedIn, setLoggedIn] = React.useState(false);
 
-    const checkLoggedIn = async () => {
-        const user = await AsyncStorage.getItem("user");
-        if (user) {
-            setLoggedIn(true);
-        } else {
-            setLoggedIn(false);
-        }
-    };
-
     // run checkLoggedIn on navigation
     useFocusEffect(
         React.useCallback(() => {
             let isActive = true;
             const check = async () => {
-                await checkLoggedIn();
+                await checkLoggedIn(setLoggedIn);
             };
             if (isActive) {
                 check();
