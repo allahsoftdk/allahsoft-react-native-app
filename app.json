@@ -15,9 +15,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
@@ -33,6 +31,11 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/allahsoft-adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "application": {
+        "android": {
+          "usesCleartextTraffic": true
+        }
       }
     },
     "web": {

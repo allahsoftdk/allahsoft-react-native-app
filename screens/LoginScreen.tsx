@@ -1,31 +1,62 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NativeBaseProvider, Box, Center, Heading, Text, FormControl, Button, HStack, Input, Link, VStack } from "native-base";
-import { useColorScheme } from "react-native";
+import { Pressable, TextInput, useColorScheme } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const LoginScreen = ({ navigation }: { navigation: any }) => {
+import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
+import axiosInstance from "../utils/axios";
+
+const LoginScreen = ({ navigation, route }: { navigation: any, route: any }) => {
+    const [username, setUsername] = React.useState("");
+    const [password, setPassword] = React.useState("");
+    const [displayMessage, setDisplayMessage] = React.useState("");
+    const [messageColor, setMessageColor] = React.useState("red.500");
+    const { signUpMessage } = route.params || {};
+
+    const login = async () => {
+        axiosInstance.post("/api/auth/login", { name: username, password: password }).then(async (res) => {
+            await AsyncStorage.setItem('user', JSON.stringify(res.data));
+            navigation.popToTop();
+        }).catch((err) => {
+            setDisplayMessage("Invalid username or password");
+        });
+    };
+
+    useEffect(() => {
+        if (signUpMessage) {
+            setUsername("");
+            setPassword("");
+            setDisplayMessage(signUpMessage);
+            setMessageColor("green.500");
+        }
+    }, [signUpMessage]);
+
     const colorScheme = useColorScheme();
+
+
     return (
         <NativeBaseProvider>
             <Center w="100%">
                 <Box safeArea p="2" py="8" w="90%" maxW="290">
-                    <Heading size="lg" fontWeight="600" style={{
-                        color: colorScheme === 'dark' ? 'white' : 'black',
-                    }} >
+                    <Heading size="lg" fontWeight="600" color={colorScheme == "dark" ? "white" : "dark"} _dark={{ color: "warmGray.800" }}>
                         Sign in to your account
                     </Heading>
+                    {displayMessage ? <Heading size="sm" fontWeight="600" color={messageColor} _dark={{ color: "warmGray.800" }}>
+                        {displayMessage}
+                    </Heading> : null}
                     <VStack space={3} mt="5">
                         <FormControl>
                             <FormControl.Label>Username</FormControl.Label>
-                            <Input style={{ color: colorScheme == 'dark' ? 'white' : 'dark' }} />
+                            <Input style={{ color: colorScheme == 'dark' ? 'white' : 'dark' }} onChangeText={(text) => setUsername(text)} />
                         </FormControl>
                         <FormControl>
                             <FormControl.Label >Password</FormControl.Label>
-                            <Input style={{ color: colorScheme == 'dark' ? 'white' : 'dark' }} type="password" />
+                            <Input style={{ color: colorScheme == 'dark' ? 'white' : 'dark' }} secureTextEntry={true} onChangeText={(text) => setPassword(text)} />
                             <Link _text={{ fontSize: "xs", fontWeight: "500", color: "indigo.500", onPress: () => navigation.navigate('ForgotTab') }} alignSelf="flex-end" mt="1">
                                 Forgot Password?
                             </Link>
                         </FormControl>
-                        <Button mt="2" style={{ backgroundColor: "#165d31" }}>
+                        <Button mt="2" style={{ backgroundColor: "#165d31" }} onPress={login}>
                             Sign in
                         </Button>
                         <HStack mt="6" justifyContent="center">
