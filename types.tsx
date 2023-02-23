@@ -9,7 +9,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 declare global {
   namespace ReactNavigation {
-    interface RootParamList extends RootStackParamList {}
+    interface RootParamList extends RootStackParamList { }
   }
 }
 
@@ -17,6 +17,19 @@ export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   Modal: undefined;
   NotFound: undefined;
+  HomeTab: undefined;
+  CompassTab: undefined;
+  LoginTab: undefined;
+  SignUpTab: undefined;
+  ForgotTab: undefined;
+  ForumTab: undefined;
+  QuranTab: undefined;
+  AlarmTab: undefined;
+  EventTab: undefined;
+  MapTab: undefined;
+  HijriTab: undefined;
+  ChatTab: undefined;
+  MessageTab: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
@@ -25,11 +38,37 @@ export type RootStackScreenProps<Screen extends keyof RootStackParamList> = Nati
 >;
 
 export type RootTabParamList = {
-  TabOne: undefined;
-  TabTwo: undefined;
+  HomeTab: undefined;
+  CompassTab: undefined;
+  LoginTab: undefined;
+  SignUpTab: undefined;
+  ForgotTab: undefined;
+  ForumTab: undefined;
+  QuranTab: undefined;
+  AlarmTab: undefined;
+  EventTab: undefined;
+  MapTab: undefined;
+  HijriTab: undefined;
+  ChatTab: undefined;
+  MessageTab: undefined;
+
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<
   BottomTabScreenProps<RootTabParamList, Screen>,
   NativeStackScreenProps<RootStackParamList>
 >;
+
+export type ChatMessage = {
+  chatRoomId: number;
+  userId: number;
+  message: string;
+  createdAt: Date;
+};
+
+export type ChatRoom = {
+  id: string;
+  name: string;
+  chatMessages: ChatMessage[];
+};
+
