@@ -25,5 +25,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
-          name: app-release.apk
+          name: allahsoft-app.apk
           path: android/app/build/outputs/apk/release/
