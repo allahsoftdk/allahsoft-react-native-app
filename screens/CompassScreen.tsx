@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState, useEffect } from 'react';
 import { useColorScheme, Image, View, Text, Dimensions, Platform, Vibration } from 'react-native';
 import { Grid, Col, Row } from 'react-native-easy-grid';

@@ -1,8 +1,10 @@
 import { FontAwesome } from '@expo/vector-icons';
 import { Box, Center, Container, Heading, HStack, Link, Pressable, Row, Stack, Text, View } from 'native-base';
+import { useColorScheme } from 'react-native';
 import React from "react";
 
 const HomeScreen = ({ navigation }: { navigation: any }) => {
+  const colorScheme = useColorScheme();
   return (
     <Center>
       <Container>
@@ -13,6 +15,7 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
                 <Stack space={2}>
                   <Heading size="md" ml="-1">
                     <FontAwesome name="bell" size={20} color="#165d31" />
+                    <Stack p="1" space={1}></Stack>
                     Upcoming Alarms
                   </Heading>
                 </Stack>
@@ -21,6 +24,7 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
                   <HStack alignItems="center">
                     <Link _text={{ color: "indigo.500", fontWeight: "medium", fontSize: "sm", onPress: () => navigation.navigate('AlarmTab') }} href="">
                       <FontAwesome name="eye" size={20} color="#165d31" />
+                      <Stack p="1" space={1}></Stack>
                       View All
                     </Link>
                   </HStack>
@@ -36,6 +40,7 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
                 <Stack space={2}>
                   <Heading size="md" ml="-1">
                     <FontAwesome name="calendar" size={20} color="#165d31" />
+                    <Stack p="1" space={1}></Stack>
                     Upcoming Events
                   </Heading>
                 </Stack>
@@ -44,6 +49,7 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
                   <HStack alignItems="center">
                     <Link _text={{ color: "indigo.500", fontWeight: "medium", fontSize: "sm", onPress: () => navigation.navigate('EventTab') }} href="">
                       <FontAwesome name="eye" size={20} color="#165d31" />
+                      <Stack p="1" space={1}></Stack>
                       View All
                     </Link>
                   </HStack>
@@ -58,7 +64,9 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
             <Pressable onPress={() => navigation.navigate('CompassTab')}  >
               <Box alignItems="center" >
                 <FontAwesome name="compass" size={100} color="#165d31" />
-                <Text> Qibla Compass </Text>
+                <Text style={{
+                  color: colorScheme === 'dark' ? 'white' : 'black',
+                }}> Qibla Compass </Text>
               </Box>
             </Pressable>
           </Box>
@@ -67,7 +75,9 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
             <Pressable onPress={() => navigation.navigate('MapTab')}  >
               <Box alignItems="center" >
                 <FontAwesome name="map" size={100} color="#165d31" />
-                <Text> Mosque Map </Text>
+                <Text style={{
+                  color: colorScheme === 'dark' ? 'white' : 'black',
+                }}> Mosque Map </Text>
               </Box>
             </Pressable>
           </Box>
@@ -75,7 +85,9 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
             <Pressable onPress={() => navigation.navigate('HijriTab')}  >
               <Box alignItems="center" >
                 <FontAwesome name="hourglass-half" size={100} color="#165d31" />
-                <Text> Hijri Converter </Text>
+                <Text style={{
+                  color: colorScheme === 'dark' ? 'white' : 'black',
+                }}> Hijri Converter </Text>
               </Box>
             </Pressable>
           </Box>

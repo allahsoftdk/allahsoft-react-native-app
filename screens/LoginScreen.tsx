@@ -39,7 +39,7 @@ const LoginScreen = ({ navigation, route }: { navigation: any, route: any }) => 
             <Center w="100%">
                 <Box safeArea p="2" py="8" w="90%" maxW="290">
                     <Heading size="lg" fontWeight="600" color={colorScheme == "dark" ? "white" : "dark"} _dark={{ color: "warmGray.800" }}>
-                        Login to your account
+                        Sign in to your account
                     </Heading>
                     {displayMessage ? <Heading size="sm" fontWeight="600" color={messageColor} _dark={{ color: "warmGray.800" }}>
                         {displayMessage}
