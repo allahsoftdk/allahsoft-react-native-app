@@ -2,11 +2,11 @@ import { View, Text, Pressable } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { styles } from "../utils/chatStyles";
+import { chatStyles } from "../styles/chatStyles";
 
 import { ChatMessage, ChatRoom } from "../types";
 
-const ChatComponent = ({ chatRoom, navigation }: {chatRoom: ChatRoom, navigation: any}) => {
+const ChatComponent = ({ chatRoom, navigation }: { chatRoom: ChatRoom, navigation: any }) => {
     const [message, setMessage] = useState<ChatMessage>();
 
     //👇🏻 Retrieves the last message in the array from the item prop, if it exists, else sets it to an empty string
@@ -23,24 +23,24 @@ const ChatComponent = ({ chatRoom, navigation }: {chatRoom: ChatRoom, navigation
     };
 
     return (
-        <Pressable style={styles.cchat} onPress={handleNavigation}>
+        <Pressable style={chatStyles.cchat} onPress={handleNavigation}>
             <Ionicons
                 name='person-circle-outline'
                 size={45}
                 color='black'
-                style={styles.cavatar}
+                style={chatStyles.cavatar}
             />
 
-            <View style={styles.crightContainer}>
+            <View style={chatStyles.crightContainer}>
                 <View>
-                    <Text style={styles.cusername}>{chatRoom.name}</Text>
+                    <Text style={chatStyles.cusername}>{chatRoom.name}</Text>
 
-                    <Text style={styles.cmessage}>
+                    <Text style={chatStyles.cmessage}>
                         {message?.message ? message.message : "No messages yet"}
                     </Text>
                 </View>
                 <View>
-                    <Text style={styles.ctime}>
+                    <Text style={chatStyles.ctime}>
                         {message?.createdAt ? message.createdAt.toString().slice(0, 19).replace('T', ' ') : ""}
                     </Text>
                 </View>

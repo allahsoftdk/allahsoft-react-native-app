@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { styles } from "../utils/chatStyles";
+import { chatStyles } from "../styles/chatStyles";
 
 export default function MessageComponent({ item, user }: { item: any; user: any }) {
     const status = item.user !== user;
@@ -11,8 +11,8 @@ export default function MessageComponent({ item, user }: { item: any; user: any 
             <View
                 style={
                     status
-                        ? styles.mmessageWrapper
-                        : [styles.mmessageWrapper, { alignItems: "flex-end" }]
+                        ? chatStyles.mmessageWrapper
+                        : [chatStyles.mmessageWrapper, { alignItems: "flex-end" }]
                 }
             >
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -20,13 +20,13 @@ export default function MessageComponent({ item, user }: { item: any; user: any 
                         name='person-circle-outline'
                         size={30}
                         color='black'
-                        style={styles.mvatar}
+                        style={chatStyles.mvatar}
                     />
                     <View
                         style={
                             status
-                                ? styles.mmessage
-                                : [styles.mmessage, { backgroundColor: "rgb(194, 243, 194)" }]
+                                ? chatStyles.mmessage
+                                : [chatStyles.mmessage, { backgroundColor: "rgb(194, 243, 194)" }]
                         }
                     >
                         <Text>{item.text}</Text>

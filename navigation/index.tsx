@@ -11,6 +11,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { ColorSchemeName, StyleSheet, Alert } from 'react-native';
 import { Box, Center, Container, Heading, HStack, Link, Pressable, Row, Text, View } from 'native-base';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Colors from '../constants/Colors';
@@ -32,6 +33,8 @@ import MapScreen from "../screens/MapScreen";
 import HijriScreen from "../screens/HijriScreen";
 import ChatScreen from "../screens/ChatScreen";
 import MessageScreen from "../screens/MessageScreen";
+
+import { globalStyles } from "../styles/globalStyles";
 
 import axiosInstance from "../utils/axios";
 import checkLoggedIn from "../utils/checkLogIn";
@@ -64,7 +67,7 @@ function RootNavigator() {
       <Stack.Screen name="ForgotTab" component={ForgotScreen} options={{ title: 'Forgot Password' }} />
       <Stack.Screen name="HomeTab" component={HomeScreen} options={{ title: 'Home' }} />
       <Stack.Screen name="CompassTab" component={CompassScreen} options={{ title: 'Compass' }} />
-      <Stack.Screen name="ForumTab" component={ForumScreen} options={{ title: 'Forum' }} />
+      <Stack.Screen name="ForumTab" component={ForumTabs} />
       <Stack.Screen name="QuranTab" component={QuranScreen} options={{ title: 'Quran' }} />
       <Stack.Screen name="AlarmTab" component={AlarmScreen} options={{ title: 'Prayer Alarms' }} />
       <Stack.Screen name="MapTab" component={MapScreen} options={{ title: 'Mosque Map' }} />
@@ -121,10 +124,10 @@ function BottomTabNavigator() {
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
-        name="ForumTab"
-        component={ForumScreen}
+        name="ForumTabs"
+        component={ForumTabs}
         options={{
-          title: 'Forum',
+          title: 'Allahsoft Forum',
           tabBarIcon: ({ color }) => <TabBarIcon name="comments" color={color} />,
         }}
       />
@@ -137,9 +140,9 @@ function BottomTabNavigator() {
           headerRight: () => (
             <View style={{ flexDirection: 'row' }}>
               <Button
-                bg={"green.500"}
+                style={globalStyles.greenColor}
                 _text={{
-                  color: colorScheme === 'dark' ? 'white' : 'black',
+                  color: "white",
                   fontWeight: "medium",
                   fontSize: "sm",
                   onPress: () => loggedIn ? logOut() : navigation.navigate('LoginTab')
@@ -173,6 +176,17 @@ function BottomTabNavigator() {
 
     </BottomTab.Navigator>
 
+  );
+}
+
+const tab = createMaterialTopTabNavigator();
+
+function ForumTabs() {
+  return (
+    <tab.Navigator>
+      <tab.Screen name="ForumTab" component={ForumScreen} options={{ title: 'Feed' }} />
+      <tab.Screen name="ChatTab" component={ChatScreen} options={{ title: 'Chat' }} />
+    </tab.Navigator>
   );
 }
 

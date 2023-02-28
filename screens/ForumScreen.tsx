@@ -1,8 +1,12 @@
 import React from "react";
-import { NativeBaseProvider, Box, Center, Link } from "native-base";
+import { NativeBaseProvider, Box, Center, Link, Button, View } from "native-base";
 import { useColorScheme } from "react-native";
 import ChatScreen from "./ChatScreen";
+import PostFeedComponent from "../components/PostFeedComponent";
 // import MessageScreen from "./MessageScreen";
+
+// import the styles
+import { globalStyles } from "../styles/globalStyles";
 
 import { NavigationContainer, useFocusEffect } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -33,29 +37,29 @@ const ForumScreen = ({ navigation }: { navigation: any }) => {
     );
 
     return loggedIn ? (
-        <Link
-            _text={{
-                color: "indigo.500",
-                fontWeight: "medium",
-                fontSize: "sm",
-                onPress: () => navigation.navigate("ChatTab"),
-            }}
-            href=""
-        >
-            Chat shit
-        </Link>
+        <View backgroundColor={colorScheme === "dark" ? "gray.800" : "white"} flex={1}>
+            <PostFeedComponent />
+        </View>
     ) : (
-        <Link
-            _text={{
-                color: "indigo.500",
-                fontWeight: "medium",
-                fontSize: "sm",
-                onPress: () => navigation.navigate("LoginTab"),
-            }}
-            href=""
-        >
-            To use this page, please login
-        </Link>
+        <Center flex={1}>
+            <Box
+                bg={colorScheme === "dark" ? "gray.800" : "white"}
+                rounded="lg"
+                shadow={1}
+                width="70%"
+                height="20%"
+                justifyContent="center"
+                alignItems="center"
+            >
+                <Button
+                    onPress={() => navigation.navigate("LoginTab")}
+                    style={globalStyles.greenColor}
+
+                >
+                    To access this page, please log in
+                </Button>
+            </Box>
+        </Center>
     );
 };
 export default ForumScreen;
