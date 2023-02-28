@@ -105,6 +105,7 @@ export type Post = {
   user: User;
   createdAt: Date;
   updatedAt: Date;
+  isUpdated: Boolean;
 };
 
 export type Role = {

@@ -20,6 +20,17 @@ const PostFeedComponent = () => {
 
     useEffect(() => {
         axiosInstance.get("/api/post/following").then((res) => {
+            res.data.sort((a: Post, b: Post) => {
+                return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
+            });
+            res.data.forEach((post: Post) => {
+                if (post.updatedAt.toString() !== post.createdAt.toString()) {
+                    post.isUpdated = true;
+                }
+                else {
+                    post.isUpdated = false;
+                }
+            });
             setPosts(res.data);
         }).catch((err) => {
             console.log(err);
@@ -31,17 +42,20 @@ const PostFeedComponent = () => {
             <Heading size="md" p={2} alignSelf="center" borderBottomColor={globalStyles.greenColor.backgroundColor} borderBottomWidth={2} borderRadius={2}>Posts from users you follow</Heading>
             <FlatList data={posts} renderItem={({ item }) => (
                 <Box borderBottomColor={globalStyles.greenColor.backgroundColor} borderBottomWidth={4} borderRadius={10} my={2} mx={2} borderLeftColor={globalStyles.greenColor.backgroundColor} borderLeftWidth={2} borderRightColor={globalStyles.greenColor.backgroundColor} borderRightWidth={2} borderTopColor={globalStyles.greenColor.backgroundColor} borderTopWidth={2}>
-                    {/* create a twitter like post */}
-                    <HStack space={2} p={2} alignItems="center">
-                        <VStack space={1} alignItems="flex-start">
-                            <Heading size="sm">{item.user.name}</Heading>
+                    <HStack p={2}>
+                        <VStack ml={2}>
+                            <Text fontSize="md" bold>{item.user.name}</Text>
+                            <Text fontSize="sm" color="gray.500">{item.user.email}</Text>
                         </VStack>
                         <Spacer />
-                        <Text color="muted.400" fontSize="xs">
-                            {item.updatedAt.toString().substring(0, 10) + " " + item.updatedAt.toString().substring(11, 16)}
-                        </Text>
+                        <VStack mr={2}>
+                            <Text fontSize="sm" color="gray.500">{new Date(item.updatedAt).toLocaleString()}</Text>
+                            {item.isUpdated ? <Text fontSize="sm" color="gray.500" alignSelf="flex-end">Edited</Text> : null}
+                        </VStack>
                     </HStack>
                     <Text p={2}>{item.description}</Text>
+
+
                 </Box>
             )}
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
