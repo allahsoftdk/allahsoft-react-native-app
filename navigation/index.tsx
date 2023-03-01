@@ -33,6 +33,8 @@ import MapScreen from "../screens/MapScreen";
 import HijriScreen from "../screens/HijriScreen";
 import ChatScreen from "../screens/ChatScreen";
 import MessageScreen from "../screens/MessageScreen";
+import SearchScreen from "../screens/SearchScreen";
+import UserProfileScreen from "../screens/UserProfileScreen";
 
 import { globalStyles } from "../styles/globalStyles";
 
@@ -78,6 +80,8 @@ function RootNavigator() {
       </Stack.Group>
       <Stack.Screen name="ChatTab" component={ChatScreen} options={{ title: 'Chat' }} />
       <Stack.Screen name="MessageTab" component={MessageScreen} options={{ title: 'Messages' }} />
+      <Stack.Screen name="SearchTab" component={SearchScreen} options={{ title: 'Search' }} />
+      <Stack.Screen name="UserProfileTab" component={UserProfileScreen} options={{ title: 'User Profile' }} />
     </Stack.Navigator>
   );
 }
@@ -185,6 +189,7 @@ function ForumTabs() {
   return (
     <tab.Navigator>
       <tab.Screen name="ForumTab" component={ForumScreen} options={{ title: 'Feed' }} />
+      <tab.Screen name="SearchTab" component={SearchScreen} options={{ title: 'Search' }} />
       <tab.Screen name="ChatTab" component={ChatScreen} options={{ title: 'Chat' }} />
     </tab.Navigator>
   );

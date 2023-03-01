@@ -31,6 +31,8 @@ export type RootStackParamList = {
   ChatTab: undefined;
   MessageTab: undefined;
   ForumTabs: undefined;
+  SearchTab: undefined;
+  UserProfileTab: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
@@ -52,7 +54,9 @@ export type RootTabParamList = {
   HijriTab: undefined;
   ChatTab: undefined;
   MessageTab: undefined;
-  ForumTabs: undefined
+  ForumTabs: undefined;
+  SearchTab: undefined;
+  UserProfileTab: undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<
@@ -76,7 +80,7 @@ export type ChatRoom = {
 
 export type PostComment = {
   id: Number;
-  comment: String;
+  comment: string;
   postId: Number;
   userId: Number;
   createdAt: Date;
@@ -85,10 +89,10 @@ export type PostComment = {
 
 export type User = {
   id: Number;
-  name: String;
-  email: String;
-  password: String;
-  token: String;
+  name: string;
+  email: string;
+  password: string;
+  token: string;
   createdAt: Date;
   updatedAt: Date;
   roleId: Number;
@@ -97,8 +101,8 @@ export type User = {
 
 export type Post = {
   id: Number;
-  description: String;
-  resources: String;
+  description: string;
+  resources: string;
   userId: Number;
   likedBy: User[];
   postComments: PostComment[];
@@ -110,5 +114,5 @@ export type Post = {
 
 export type Role = {
   id: Number;
-  name: String;
+  name: string;
 };
