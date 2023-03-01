@@ -59,6 +59,13 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> = Composit
   NativeStackScreenProps<RootStackParamList>
 >;
 
+export type PrayerTimes = {
+  city: string;
+  date: string;
+  today: [string, string][];
+  tomorrow: [string, string][];
+};
+
 export type ChatMessage = {
   chatRoomId: number;
   userId: number;
