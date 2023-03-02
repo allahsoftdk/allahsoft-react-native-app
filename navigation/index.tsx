@@ -32,6 +32,7 @@ import MapScreen from "../screens/MapScreen";
 import HijriScreen from "../screens/HijriScreen";
 import ChatScreen from "../screens/ChatScreen";
 import MessageScreen from "../screens/MessageScreen";
+import QuranChapterScreen from "../screens/QuranChapterScreen";
 
 import axiosInstance from "../utils/axios";
 import checkLoggedIn from "../utils/checkLogIn";
@@ -75,6 +76,7 @@ function RootNavigator() {
       </Stack.Group>
       <Stack.Screen name="ChatTab" component={ChatScreen} options={{ title: 'Chat' }} />
       <Stack.Screen name="MessageTab" component={MessageScreen} options={{ title: 'Messages' }} />
+      <Stack.Screen name="QuranChapterTab" component={QuranChapterScreen} options={{ title: 'Quran chapter: ' }} />
     </Stack.Navigator>
   );
 }

@@ -30,6 +30,7 @@ export type RootStackParamList = {
   HijriTab: undefined;
   ChatTab: undefined;
   MessageTab: undefined;
+  QuranChapterTab: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
@@ -51,13 +52,76 @@ export type RootTabParamList = {
   HijriTab: undefined;
   ChatTab: undefined;
   MessageTab: undefined;
-
+  QuranChapterTab: undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<
   BottomTabScreenProps<RootTabParamList, Screen>,
   NativeStackScreenProps<RootStackParamList>
 >;
+
+export type TranslatedName = {
+  language_name: string;
+  name: string;
+}
+
+export type Chapter = {
+  id: number;
+  revelation_place: string;
+  revelation_order: number;
+  bismillah_pre: boolean;
+  name_simple: string;
+  name_complex: string;
+  name_arabic: string;
+  verses_count: number;
+  pages: number[];
+  translated_name: TranslatedName;
+}
+
+export type QuranChapters = {
+  chapters: Chapter[];
+}
+
+export type Ayah = {
+  number: number;
+  text: string;
+  numberInSurah: number;
+  juz: number;
+  manzil: number;
+  page: number;
+  ruku: number;
+  hizbQuarter: number;
+  sajda: boolean;
+}
+
+export type Edition = {
+  identifier: string;
+  language: string;
+  name: string;
+  englishName: string;
+  format: string;
+  type: string;
+  direction: string;
+}
+
+export type Data = {
+  number: number;
+  name: string;
+  englishName: string;
+  englishNameTranslation: string;
+  revelationType: string;
+  numberOfAyahs: number;
+  ayahs: Ayah[];
+  edition: Edition;
+}
+
+export type QuranVerse = {
+  code: number;
+  status: string;
+  data: Data;
+}
+
+
 
 export type ChatMessage = {
   chatRoomId: number;
