@@ -1,11 +1,29 @@
 import { FontAwesome } from '@expo/vector-icons';
 import { Box, Center, Container, Heading, HStack, Link, Pressable, Row, Stack, Text, View } from 'native-base';
-import { useColorScheme } from 'react-native';
-import React from "react";
+import { FlatList, useColorScheme, Image } from 'react-native';
+import React, { useEffect } from "react";
+import { PrayerTimes } from "../types";
+import axios from 'axios';
 
 const HomeScreen = ({ navigation }: { navigation: any }) => {
+  const [alarms, setAlarms] = React.useState<PrayerTimes>({} as PrayerTimes);
+  const [nextPrayer, setNextPrayer] = React.useState<any>(undefined);
+
+  useEffect(() => {
+    axios.get("https://dailyprayer.abdulrcs.repl.co/api/copenhagen").then((res) => {
+      res.data.today = Object.entries(res.data.today);
+      res.data.tomorrow = Object.entries(res.data.tomorrow);
+      setAlarms(res.data);
+      setNextPrayer(res.data.today.filter((prayer: any) => {
+        return prayer[1] > new Date().toLocaleTimeString();
+      }));
+    }).catch((err) => {
+      console.log(err);
+    });
+  }, []);
+
   const colorScheme = useColorScheme();
-  return (
+  return nextPrayer ? (
     <Center>
       <Box alignItems="center">
         <Stack p="4">
@@ -92,7 +110,7 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
         </Box>
       </HStack>
     </Center >
-  );
+  ) : <Image source={require('../assets/images/allahsoft-splash.png')} style={{ width: '100%', height: '100%' }} />
 }
 
 export default HomeScreen;

@@ -121,7 +121,12 @@ export type QuranVerse = {
   data: Data;
 }
 
-
+export type PrayerTimes = {
+  city: string;
+  date: string;
+  today: [string, string][];
+  tomorrow: [string, string][];
+};
 
 export type ChatMessage = {
   chatRoomId: number;
