@@ -1,8 +1,10 @@
 import React from "react";
-import { NativeBaseProvider, Box, Center, Link } from "native-base";
+import { NativeBaseProvider, Box, Center, Link, Button, View } from "native-base";
 import { useColorScheme } from "react-native";
 import ChatScreen from "./ChatScreen";
-// import MessageScreen from "./MessageScreen";
+import PostFeedComponent from "../components/PostFeedComponent";
+
+import { globalStyles } from "../styles/globalStyles";
 
 import { NavigationContainer, useFocusEffect } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -14,48 +16,11 @@ const Stack = createNativeStackNavigator();
 
 const ForumScreen = ({ navigation }: { navigation: any }) => {
     const colorScheme = useColorScheme();
-    const [loggedIn, setLoggedIn] = React.useState(false);
 
-    // run checkLoggedIn on navigation
-    useFocusEffect(
-        React.useCallback(() => {
-            let isActive = true;
-            const check = async () => {
-                await checkLoggedIn(setLoggedIn);
-            };
-            if (isActive) {
-                check();
-            }
-            return () => {
-                isActive = false;
-            };
-        }, [])
-    );
-
-    return loggedIn ? (
-        <Link
-            _text={{
-                color: "indigo.500",
-                fontWeight: "medium",
-                fontSize: "sm",
-                onPress: () => navigation.navigate("ChatTab"),
-            }}
-            href=""
-        >
-            Chat shit
-        </Link>
-    ) : (
-        <Link
-            _text={{
-                color: "indigo.500",
-                fontWeight: "medium",
-                fontSize: "sm",
-                onPress: () => navigation.navigate("LoginTab"),
-            }}
-            href=""
-        >
-            To use this page, please login
-        </Link>
-    );
+    return (
+        <View backgroundColor={colorScheme === "dark" ? "gray.800" : "white"} flex={1}>
+            <PostFeedComponent />
+        </View>
+    )
 };
 export default ForumScreen;
