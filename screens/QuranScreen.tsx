@@ -25,19 +25,21 @@ const QuranScreen = ({ navigation }: { navigation: any }) => {
                 <Stack p="2">
                     <Center>
                         <Box width={"350"} rounded="lg" overflow="hidden" borderColor="#165d31" borderWidth="1" bg={"white"} >
-                            <Flex direction="row" p="4">
-                                <HStack p={2} paddingRight={"6"} >
+                            <Flex direction="row" p="2">
+                                <HStack p={2} paddingRight={"4"} >
                                     <Heading color={"#165d31"} > {item.id}</Heading>
                                 </HStack>
-                                <HStack>
+                                <View>
                                     <Flex direction="column" >
                                         <Heading color={"#165d31"} >  {item.name_simple}</Heading>
                                         <Flex direction="row" >
                                             <Text> {item.name_simple} </Text>
-                                            <Text paddingLeft={3} > {item.verses_count}  Ayahs </Text>
+                                            <View>
+                                                <Text> {item.verses_count}  Ayahs </Text>
+                                            </View>
                                         </Flex>
                                     </Flex>
-                                </HStack>
+                                </View>
                             </Flex>
                         </Box>
                     </Center>
@@ -64,7 +66,7 @@ const QuranScreen = ({ navigation }: { navigation: any }) => {
                 windowSize={1}
                 onEndReachedThreshold={0.5}
                 initialNumToRender={5}
-                maxToRenderPerBatch={3}
+                maxToRenderPerBatch={10}
             />
         </Box>
     )
