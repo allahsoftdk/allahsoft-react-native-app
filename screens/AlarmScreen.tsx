@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FontAwesome } from '@expo/vector-icons';
-import { Box, Center, Container, FlatList, Heading, HStack, Link, Pressable, Row, ScrollView, Stack, Text, View } from "native-base";
-import { useColorScheme, useWindowDimensions } from "react-native";
+import { Box, Center, Container, FlatList, Heading, Stack, Text } from "native-base";
+import { useWindowDimensions } from "react-native";
 import { TabView, SceneMap } from 'react-native-tab-view';
 import axios from "axios";
 import { PrayerTimes } from "../types";
