@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { View, Text, Pressable, SafeAreaView, FlatList } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import ChatComponent from "../components/ChatComponent";
@@ -20,13 +20,15 @@ const Chat = ({ navigation }: { navigation: any }) => {
     const colorScheme = useColorScheme();
     const [rooms, setRooms] = useState<ChatRoom[]>([]);
 
-    useFocusEffect(() => {
-        axiosInstance.get("/api/chatRoom/loggedInUser").then((res) => {
-            setRooms(res.data);
-        }).catch((err) => {
-            console.log(err);
-        });
-    });
+    useFocusEffect(
+        useCallback(() => {
+            axiosInstance.get("/api/chatRoom/loggedInUser").then((res) => {
+                setRooms(res.data);
+            }).catch((err) => {
+                console.log(err);
+            });
+        }, [])
+    );
 
     return (
         <SafeAreaView style={chatStyles.chatscreen}>

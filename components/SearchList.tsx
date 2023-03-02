@@ -6,9 +6,9 @@ import {
     FlatList,
     SafeAreaView,
     ListRenderItemInfo,
-    Button,
     RefreshControl,
 } from "react-native";
+import { Button } from "native-base";
 import { User } from "../types";
 
 // the filter
@@ -17,10 +17,10 @@ const SearchList = ({ searchPhrase, users, setClicked, navigation, setRefreshing
     // definition of the Item, which will be rendered in the FlatList
     const UserItem = ({ user }: { user: User }) => (
         <View style={styles.item}>
-            <Button title={user.name} onPress={() => {
+            <Button onPress={() => {
                 navigation.navigate("UserProfileTab", { user: user });
                 setClicked(false);
-            }} />
+            }} style={{ backgroundColor: '#165d31' }}>{user.name}</Button>
         </View>
     );
 
