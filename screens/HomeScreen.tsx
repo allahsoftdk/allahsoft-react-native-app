@@ -26,20 +26,20 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
   return nextPrayer ? (
     <Center>
       <Box alignItems="center">
-        <Stack p="4">
+        <Stack p="4" space={3}>
           <Box minW={"300"} rounded="lg" overflow="hidden" borderColor="#165d31" borderWidth="1" _dark={{ borderColor: "coolGray.600", backgroundColor: "gray.700" }} _web={{ shadow: 2, borderWidth: 0 }} _light={{ backgroundColor: "gray.50" }}>
             <Stack p="4" space={3}>
               <Stack space={2}>
                 <Heading size="md" ml="-1">
                   <FontAwesome name="bell" size={20} color="#165d31" />
                   <Stack p="1" space={1}></Stack>
-                  Upcoming Alarms
+                  {nextPrayer[0][0].toString()}
                 </Heading>
               </Stack>
-              <Text fontSize={"md"} fontWeight="400">12:24 Dhurhr</Text>
+              <Text fontSize={"md"} fontWeight="400">{nextPrayer[0][1].toString()}</Text>
               <HStack alignItems="center" space={4} justifyContent="space-between">
                 <HStack alignItems="center">
-                  <Link _text={{ color: "indigo.500", fontWeight: "medium", fontSize: "sm", onPress: () => navigation.navigate('AlarmTab') }} href="">
+                  <Link _text={{ color: "indigo.500", fontWeight: "medium", fontSize: "sm", onPress: () => navigation.navigate('AlarmTab', { alarms: alarms }) }} href="">
                     <FontAwesome name="eye" size={20} color="#165d31" />
                     <Stack p="1" space={1}></Stack>
                     View All
