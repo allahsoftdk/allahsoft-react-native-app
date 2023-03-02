@@ -2,9 +2,9 @@ import React, { useLayoutEffect, useState } from "react";
 import { View, TextInput, Text, FlatList, Pressable } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import MessageComponent from "../components/MessageComponent";
-import { styles } from "../utils/chatStyles";
+import { chatStyles } from "../styles/chatStyles";
 
-const MessagingScreen = ({ route, navigation }: {route: any, navigation: any} ) => {
+const MessagingScreen = ({ route, navigation }: { route: any, navigation: any }) => {
     const [chatMessages, setChatMessages] = useState([
         {
             id: "1",
@@ -25,7 +25,7 @@ const MessagingScreen = ({ route, navigation }: {route: any, navigation: any} ) 
     //👇🏻 Access the chatroom's name and id
     const { name, id } = route.params;
 
-//👇🏻 This function gets the username saved on AsyncStorage
+    //👇🏻 This function gets the username saved on AsyncStorage
     const getUsername = async () => {
         try {
             const value = await AsyncStorage.getItem("username");
@@ -66,10 +66,10 @@ const MessagingScreen = ({ route, navigation }: {route: any, navigation: any} ) 
     };
 
     return (
-        <View style={styles.messagingscreen}>
+        <View style={chatStyles.messagingscreen}>
             <View
                 style={[
-                    styles.messagingscreen,
+                    chatStyles.messagingscreen,
                     { paddingVertical: 15, paddingHorizontal: 10 },
                 ]}
             >
@@ -86,13 +86,13 @@ const MessagingScreen = ({ route, navigation }: {route: any, navigation: any} ) 
                 )}
             </View>
 
-            <View style={styles.messaginginputContainer}>
+            <View style={chatStyles.messaginginputContainer}>
                 <TextInput
-                    style={styles.messaginginput}
+                    style={chatStyles.messaginginput}
                     onChangeText={(value) => setMessage(value)}
                 />
                 <Pressable
-                    style={styles.messagingbuttonContainer}
+                    style={chatStyles.messagingbuttonContainer}
                     onPress={handleNewMessage}
                 >
                     <View>
