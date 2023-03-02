@@ -185,13 +185,52 @@ function BottomTabNavigator() {
 
 const tab = createMaterialTopTabNavigator();
 
-function ForumTabs() {
-  return (
+function ForumTabs({ navigation, route }: { navigation: any, route: any }) {
+  const [loggedIn, setLoggedIn] = React.useState(false);
+  const colorScheme = useColorScheme();
+
+  // run checkLoggedIn on navigation
+  useFocusEffect(
+    React.useCallback(() => {
+      let isActive = true;
+      const check = async () => {
+        await checkLoggedIn(setLoggedIn);
+      };
+      if (isActive) {
+        check();
+      }
+      return () => {
+        isActive = false;
+      };
+    }, [])
+  );
+
+  return loggedIn ? (
     <tab.Navigator>
       <tab.Screen name="ForumTab" component={ForumScreen} options={{ title: 'Feed' }} />
       <tab.Screen name="SearchTab" component={SearchScreen} options={{ title: 'Search' }} />
       <tab.Screen name="ChatTab" component={ChatScreen} options={{ title: 'Chat' }} />
     </tab.Navigator>
+  ) : (
+    <Center flex={1}>
+      <Box
+        bg={colorScheme === "dark" ? "gray.800" : "white"}
+        rounded="lg"
+        shadow={1}
+        width="70%"
+        height="20%"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Button
+          onPress={() => navigation.navigate("LoginTab")}
+          style={globalStyles.greenColor}
+
+        >
+          To access this page, please log in
+        </Button>
+      </Box>
+    </Center>
   );
 }
 

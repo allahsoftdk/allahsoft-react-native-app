@@ -76,6 +76,7 @@ export type ChatRoom = {
   id: string;
   name: string;
   chatMessages: ChatMessage[];
+  chatRoomParticipants: User[];
 };
 
 export type PostComment = {

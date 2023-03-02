@@ -9,14 +9,28 @@ import { User } from "../types";
 
 const UserProfileScreen = ({ navigation, route }: { navigation: any, route: any }) => {
     const [user, setUser] = useState<User>(route.params.user);
+    const [errorMessage, setErrorMessage] = useState<string>();
 
     const colorScheme = useColorScheme();
+
+    const createChat = async () => {
+        axiosInstance.post(`/api/chatRoom/${user.id}`).then((res) => {
+            navigation.navigate("MessageTab", {
+                id: res.data.id,
+                name: res.data.chatRoomParticipants.filter((participant: any) => participant.id === user.id)[0].name
+            });
+        }).catch((err) => {
+            setErrorMessage(err.response.data.message);
+            console.log(err);
+        });
+    };
 
 
     return (
         <NativeBaseProvider>
             <Text>{JSON.stringify(user)}</Text>
-            <Button onPress={() => navigation.goBack()}>Chat</Button>
+            <Button onPress={() => createChat()}>Start Chat</Button>
+            {!!errorMessage && <Text>{errorMessage}</Text>}
         </NativeBaseProvider>
 
     )

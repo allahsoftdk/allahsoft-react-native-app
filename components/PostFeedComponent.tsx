@@ -4,7 +4,7 @@ import socket from "../utils/socket";
 import axiosInstance from "../utils/axios";
 import { Box, FlatList, Heading, Avatar, HStack, VStack, Text, Spacer, Center, NativeBaseProvider, View, ScrollView, Input, Button, Modal } from "native-base";
 import { Post, User } from "../types";
-import { RefreshControl } from "react-native";
+import { ActivityIndicator, RefreshControl, TouchableOpacity, StyleSheet } from "react-native";
 import { globalStyles } from "../styles/globalStyles";
 import { Keyboard } from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -15,6 +15,19 @@ const PostFeedComponent = () => {
     const [refreshing, setRefreshing] = React.useState(false);
     const [thoughts, setThoughts] = useState<string>("");
     const [loggedInUser, setLoggedInUser] = useState<User>();
+    const [loading, setLoading] = useState(true);
+    const [offset, setOffset] = useState(1);
+
+    const getLoggedInUser = async () => {
+        try {
+            const value = await AsyncStorage.getItem('user');
+            if (value !== null) {
+                setLoggedInUser(JSON.parse(value));
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
@@ -40,15 +53,8 @@ const PostFeedComponent = () => {
         }).catch((err) => {
             console.log(err);
         });
+        getLoggedInUser();
     }, [refreshing]);
-
-    useEffect(() => {
-        axiosInstance.get("/api/auth/loggedInUser").then((res) => {
-            setLoggedInUser(res.data);
-        }).catch((err) => {
-            console.log(err);
-        });
-    }, []);
 
     const createPost = async () => {
         axiosInstance.post("/api/post", { description: thoughts }).then((res) => {
@@ -59,6 +65,27 @@ const PostFeedComponent = () => {
         ).catch((err) => {
             console.log(err);
         });
+    };
+
+    // use this when optimizing the feed. https://stackoverflow.com/questions/73440409/render-only-10-item-in-react-native-flatlist-on-each-page-then-the-next-5-on-pu
+    const renderFooter = () => {
+        return (
+            //Footer View with Load More button
+            <View style={loadMoreStyles.footer}>
+                <TouchableOpacity
+                    activeOpacity={0.9}
+                    onPress={onRefresh}
+                    //On Click of button load more data
+                    style={loadMoreStyles.loadMoreBtn}>
+                    <Text style={loadMoreStyles.btnText}>Load More</Text>
+                    {loading ? (
+                        <ActivityIndicator
+                            color="white"
+                            style={{ marginLeft: 8 }} />
+                    ) : null}
+                </TouchableOpacity>
+            </View>
+        );
     };
 
     return (
@@ -97,6 +124,33 @@ const PostFeedComponent = () => {
     );
 
 };
+
+const loadMoreStyles = StyleSheet.create({
+    container: {
+        justifyContent: 'center',
+        flex: 1,
+    },
+    footer: {
+        padding: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+    },
+    loadMoreBtn: {
+        padding: 10,
+        backgroundColor: '#800000',
+        borderRadius: 4,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    btnText: {
+        color: 'white',
+        fontSize: 15,
+        textAlign: 'center',
+    },
+});
+
 
 const scrollStyle = {
     backgroundColor: "white",

@@ -7,11 +7,12 @@ import {
     SafeAreaView,
     ListRenderItemInfo,
     Button,
+    RefreshControl,
 } from "react-native";
 import { User } from "../types";
 
 // the filter
-const SearchList = ({ searchPhrase, users, setClicked, navigation }: any) => {
+const SearchList = ({ searchPhrase, users, setClicked, navigation, setRefreshing, refreshing }: any) => {
 
     // definition of the Item, which will be rendered in the FlatList
     const UserItem = ({ user }: { user: User }) => (
@@ -22,6 +23,13 @@ const SearchList = ({ searchPhrase, users, setClicked, navigation }: any) => {
             }} />
         </View>
     );
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 2000);
+    }, []);
 
     const renderItem = (item: ListRenderItemInfo<User>) => {
         // when no input, show all
@@ -41,6 +49,7 @@ const SearchList = ({ searchPhrase, users, setClicked, navigation }: any) => {
                 // @ts-ignore
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id.toString()}
+                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
             />
 
         </SafeAreaView>

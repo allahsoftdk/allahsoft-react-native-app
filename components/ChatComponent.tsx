@@ -1,24 +1,47 @@
 import { View, Text, Pressable } from "react-native";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { chatStyles } from "../styles/chatStyles";
 
-import { ChatMessage, ChatRoom } from "../types";
+import { ChatMessage, ChatRoom, User } from "../types";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ChatComponent = ({ chatRoom, navigation }: { chatRoom: ChatRoom, navigation: any }) => {
     const [message, setMessage] = useState<ChatMessage>();
+    const [loggedInUser, setLoggedInUser] = useState<User>();
+    const [chatRoomName, setChatRoomName] = useState<string>("");
 
-    //👇🏻 Retrieves the last message in the array from the item prop, if it exists, else sets it to an empty string
+    const getLoggedInUser = async () => {
+        try {
+            const value = await AsyncStorage.getItem('user');
+            if (value !== null) {
+                setLoggedInUser(JSON.parse(value));
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useFocusEffect(
+        useCallback(() => {
+            getLoggedInUser();
+        }, [])
+    );
+
+    useEffect(() => {
+        loggedInUser ? setChatRoomName(chatRoom.chatRoomParticipants.filter((participant: any) => participant.id !== loggedInUser.id)[0].name) : chatRoom.name;
+    }, [loggedInUser]);
+
     useLayoutEffect(() => {
         setMessage(chatRoom.chatMessages ? chatRoom.chatMessages[chatRoom.chatMessages.length - 1] : undefined);
     }, []);
 
-    ///👇🏻 Navigates to the Messaging screen
+
     const handleNavigation = () => {
         navigation.navigate("MessageTab", {
             id: chatRoom.id,
-            name: chatRoom.name,
+            name: chatRoomName,
         });
     };
 
@@ -33,7 +56,7 @@ const ChatComponent = ({ chatRoom, navigation }: { chatRoom: ChatRoom, navigatio
 
             <View style={chatStyles.crightContainer}>
                 <View>
-                    <Text style={chatStyles.cusername}>{chatRoom.name}</Text>
+                    <Text style={chatStyles.cusername}>{chatRoomName}</Text>
 
                     <Text style={chatStyles.cmessage}>
                         {message?.message ? message.message : "No messages yet"}
