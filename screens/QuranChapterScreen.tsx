@@ -21,14 +21,14 @@ const QuranChapterScreen = ({ navigation, route }: { navigation: any, route: any
         return (
             <Stack p="2">
                 <Center>
-                    <Box width={"350"} rounded="lg" borderColor="#165d31" borderWidth="1" bg={"white"} >
+                    <Box width={"90%"} rounded="lg" borderColor="#165d31" borderWidth="1" bg={"white"} >
                         <Flex direction="row" p="2">
                             <HStack p={2} paddingRight={"4"} >
                                 <Heading color={"#165d31"} > {item.number}</Heading>
                             </HStack>
                             <HStack alignItems={"center"}>
                                 {/* <View > */}
-                                <Text w={240} color={"#165d31"} >  {item.text}</Text>
+                                <Text w={'85%'} color={"#165d31"} >  {item.text}</Text>
                                 {/* </View> */}
                             </HStack>
                         </Flex>
