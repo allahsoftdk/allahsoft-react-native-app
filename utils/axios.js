@@ -1,7 +1,7 @@
 import axios from "axios";
 const baseURL =
   process.env.NODE_ENV === "production"
-    ? "https://admin.allahsoft.dk"
+    ? "https://mydomain.com"
     : // Alias for the ip of the host machine
       "http://10.0.2.2";
 const axiosInstance = axios.create({

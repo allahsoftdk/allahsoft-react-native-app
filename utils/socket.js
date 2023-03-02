@@ -2,7 +2,7 @@ import { io } from "socket.io-client";
 
 const socket =
   process.env.NODE_ENV === "production"
-    ? io("https://admin.allahsoft.dk")
+    ? io("https://mydomain.com")
     : // Alias for the ip of the host machine
       io("http://10.0.2.2:80");
 

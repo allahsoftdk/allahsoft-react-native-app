@@ -1,69 +1,46 @@
 import { View, Text, Pressable } from "react-native";
-import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { chatStyles } from "../styles/chatStyles";
+import { useNavigation } from "@react-navigation/native";
+import { styles } from "../utils/chatStyles";
 
-import { ChatMessage, ChatRoom, User } from "../types";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ChatMessage, ChatRoom } from "../types";
 
-const ChatComponent = ({ chatRoom, navigation }: { chatRoom: ChatRoom, navigation: any }) => {
+const ChatComponent = ({ chatRoom, navigation }: {chatRoom: ChatRoom, navigation: any}) => {
     const [message, setMessage] = useState<ChatMessage>();
-    const [loggedInUser, setLoggedInUser] = useState<User>();
-    const [chatRoomName, setChatRoomName] = useState<string>("");
 
-    const getLoggedInUser = async () => {
-        try {
-            const value = await AsyncStorage.getItem('user');
-            if (value !== null) {
-                setLoggedInUser(JSON.parse(value));
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    useFocusEffect(
-        useCallback(() => {
-            getLoggedInUser();
-        }, [])
-    );
-
-    useEffect(() => {
-        loggedInUser ? setChatRoomName(chatRoom.chatRoomParticipants.filter((participant: any) => participant.id !== loggedInUser.id)[0].name) : chatRoom.name;
-    }, [loggedInUser]);
-
+    //👇🏻 Retrieves the last message in the array from the item prop, if it exists, else sets it to an empty string
     useLayoutEffect(() => {
         setMessage(chatRoom.chatMessages ? chatRoom.chatMessages[chatRoom.chatMessages.length - 1] : undefined);
     }, []);
 
-
+    ///👇🏻 Navigates to the Messaging screen
     const handleNavigation = () => {
         navigation.navigate("MessageTab", {
             id: chatRoom.id,
-            name: chatRoomName,
+            name: chatRoom.name,
         });
     };
 
     return (
-        <Pressable style={chatStyles.cchat} onPress={handleNavigation}>
+        <Pressable style={styles.cchat} onPress={handleNavigation}>
             <Ionicons
                 name='person-circle-outline'
                 size={45}
                 color='black'
-                style={chatStyles.cavatar}
+                style={styles.cavatar}
             />
 
-            <View style={chatStyles.crightContainer}>
+            <View style={styles.crightContainer}>
                 <View>
-                    <Text style={chatStyles.cusername}>{chatRoomName}</Text>
+                    <Text style={styles.cusername}>{chatRoom.name}</Text>
 
-                    <Text style={chatStyles.cmessage}>
+                    <Text style={styles.cmessage}>
                         {message?.message ? message.message : "No messages yet"}
                     </Text>
                 </View>
                 <View>
-                    <Text style={chatStyles.ctime}>
+                    <Text style={styles.ctime}>
                         {message?.createdAt ? message.createdAt.toString().slice(0, 19).replace('T', ' ') : ""}
                     </Text>
                 </View>

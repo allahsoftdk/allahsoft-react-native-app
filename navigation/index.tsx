@@ -11,7 +11,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { ColorSchemeName, StyleSheet, Alert } from 'react-native';
 import { Box, Center, Container, Heading, HStack, Link, Pressable, Row, Text, View } from 'native-base';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Colors from '../constants/Colors';
@@ -33,10 +32,6 @@ import MapScreen from "../screens/MapScreen";
 import HijriScreen from "../screens/HijriScreen";
 import ChatScreen from "../screens/ChatScreen";
 import MessageScreen from "../screens/MessageScreen";
-import SearchScreen from "../screens/SearchScreen";
-import UserProfileScreen from "../screens/UserProfileScreen";
-
-import { globalStyles } from "../styles/globalStyles";
 
 import axiosInstance from "../utils/axios";
 import checkLoggedIn from "../utils/checkLogIn";
@@ -69,7 +64,7 @@ function RootNavigator() {
       <Stack.Screen name="ForgotTab" component={ForgotScreen} options={{ title: 'Forgot Password' }} />
       <Stack.Screen name="HomeTab" component={HomeScreen} options={{ title: 'Home' }} />
       <Stack.Screen name="CompassTab" component={CompassScreen} options={{ title: 'Compass' }} />
-      <Stack.Screen name="ForumTab" component={ForumTabs} />
+      <Stack.Screen name="ForumTab" component={ForumScreen} options={{ title: 'Forum' }} />
       <Stack.Screen name="QuranTab" component={QuranScreen} options={{ title: 'Quran' }} />
       <Stack.Screen name="AlarmTab" component={AlarmScreen} options={{ title: 'Prayer Alarms' }} />
       <Stack.Screen name="MapTab" component={MapScreen} options={{ title: 'Mosque Map' }} />
@@ -80,8 +75,6 @@ function RootNavigator() {
       </Stack.Group>
       <Stack.Screen name="ChatTab" component={ChatScreen} options={{ title: 'Chat' }} />
       <Stack.Screen name="MessageTab" component={MessageScreen} options={{ title: 'Messages' }} />
-      <Stack.Screen name="SearchTab" component={SearchScreen} options={{ title: 'Search' }} />
-      <Stack.Screen name="UserProfileTab" component={UserProfileScreen} options={{ title: 'User Profile' }} />
     </Stack.Navigator>
   );
 }
@@ -128,10 +121,10 @@ function BottomTabNavigator() {
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
-        name="ForumTabs"
-        component={ForumTabs}
+        name="ForumTab"
+        component={ForumScreen}
         options={{
-          title: 'Allahsoft Forum',
+          title: 'Forum',
           tabBarIcon: ({ color }) => <TabBarIcon name="comments" color={color} />,
         }}
       />
@@ -144,9 +137,9 @@ function BottomTabNavigator() {
           headerRight: () => (
             <View style={{ flexDirection: 'row' }}>
               <Button
-                style={globalStyles.greenColor}
+                bg={"green.500"}
                 _text={{
-                  color: "white",
+                  color: colorScheme === 'dark' ? 'white' : 'black',
                   fontWeight: "medium",
                   fontSize: "sm",
                   onPress: () => loggedIn ? logOut() : navigation.navigate('LoginTab')
@@ -180,57 +173,6 @@ function BottomTabNavigator() {
 
     </BottomTab.Navigator>
 
-  );
-}
-
-const tab = createMaterialTopTabNavigator();
-
-function ForumTabs({ navigation, route }: { navigation: any, route: any }) {
-  const [loggedIn, setLoggedIn] = React.useState(false);
-  const colorScheme = useColorScheme();
-
-  // run checkLoggedIn on navigation
-  useFocusEffect(
-    React.useCallback(() => {
-      let isActive = true;
-      const check = async () => {
-        await checkLoggedIn(setLoggedIn);
-      };
-      if (isActive) {
-        check();
-      }
-      return () => {
-        isActive = false;
-      };
-    }, [])
-  );
-
-  return loggedIn ? (
-    <tab.Navigator>
-      <tab.Screen name="ForumTab" component={ForumScreen} options={{ title: 'Feed' }} />
-      <tab.Screen name="SearchTab" component={SearchScreen} options={{ title: 'Search' }} />
-      <tab.Screen name="ChatTab" component={ChatScreen} options={{ title: 'Chat' }} />
-    </tab.Navigator>
-  ) : (
-    <Center flex={1}>
-      <Box
-        bg={colorScheme === "dark" ? "gray.800" : "white"}
-        rounded="lg"
-        shadow={1}
-        width="70%"
-        height="20%"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Button
-          onPress={() => navigation.navigate("LoginTab")}
-          style={globalStyles.greenColor}
-
-        >
-          To access this page, please log in
-        </Button>
-      </Box>
-    </Center>
   );
 }
 
