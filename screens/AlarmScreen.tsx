@@ -6,9 +6,9 @@ import { TabView, SceneMap } from 'react-native-tab-view';
 import axios from "axios";
 import { PrayerTimes } from "../types";
 
-export default function AlarmScreen() {
+export default function AlarmScreen({ route, navigation }: { route: any, navigation: any }) {
     const layout = useWindowDimensions();
-    const [alarms, setAlarms] = React.useState<PrayerTimes>({} as PrayerTimes);
+    const [alarms, setAlarms] = React.useState<PrayerTimes>(route.params.alarms);
 
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
@@ -16,23 +16,12 @@ export default function AlarmScreen() {
         { key: 'second', title: 'Tomorrow', alarms: alarms },
     ]);
 
-    React.useEffect(() => {
-        axios.get("https://dailyprayer.abdulrcs.repl.co/api/copenhagen").then((res) => {
-            res.data.today = Object.entries(res.data.today);
-            res.data.tomorrow = Object.entries(res.data.tomorrow);
-            setAlarms(res.data);
-        }).catch((err) => {
-            console.log(err);
-        });
-    }, [routes]);
-
-
     const FirstRoute = () => (
         <Center>
             <FlatList data={alarms.today} renderItem={({ item }) => (
                 <Container>
                     <Box alignItems="center">
-                        <Stack p="4" space={3}>
+                        <Stack p="3" space={3}>
                             <Box minW={"250"} rounded="lg" overflow="hidden" borderColor="#165d31" borderWidth="1" _dark={{ borderColor: "coolGray.600", backgroundColor: "gray.700" }} _web={{ shadow: 2, borderWidth: 0 }} _light={{ backgroundColor: "gray.50" }}>
                                 <Stack p="4" space={3}>
                                     <Stack space={2}>
@@ -58,7 +47,7 @@ export default function AlarmScreen() {
             <FlatList data={alarms.tomorrow} renderItem={({ item }) => (
                 <Container>
                     <Box alignItems="center">
-                        <Stack p="4" space={3}>
+                        <Stack p="3" space={3}>
                             <Box minW={"250"} rounded="lg" overflow="hidden" borderColor="#165d31" borderWidth="1" _dark={{ borderColor: "coolGray.600", backgroundColor: "gray.700" }} _web={{ shadow: 2, borderWidth: 0 }} _light={{ backgroundColor: "gray.50" }}>
                                 <Stack p="4" space={3}>
                                     <Stack space={2}>

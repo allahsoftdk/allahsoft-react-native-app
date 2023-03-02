@@ -1,11 +1,29 @@
 import { FontAwesome } from '@expo/vector-icons';
 import { Box, Center, Container, Heading, HStack, Link, Pressable, Row, Stack, Text, View } from 'native-base';
-import { useColorScheme } from 'react-native';
-import React from "react";
+import { FlatList, useColorScheme, Image } from 'react-native';
+import React, { useEffect } from "react";
+import { PrayerTimes } from "../types";
+import axios from 'axios';
 
 const HomeScreen = ({ navigation }: { navigation: any }) => {
+  const [alarms, setAlarms] = React.useState<PrayerTimes>({} as PrayerTimes);
+  const [nextPrayer, setNextPrayer] = React.useState<any>(undefined);
+
+  useEffect(() => {
+    axios.get("https://dailyprayer.abdulrcs.repl.co/api/copenhagen").then((res) => {
+      res.data.today = Object.entries(res.data.today);
+      res.data.tomorrow = Object.entries(res.data.tomorrow);
+      setAlarms(res.data);
+      setNextPrayer(res.data.today.filter((prayer: any) => {
+        return prayer[1] > new Date().toLocaleTimeString();
+      }));
+    }).catch((err) => {
+      console.log(err);
+    });
+  }, []);
+
   const colorScheme = useColorScheme();
-  return (
+  return nextPrayer ? (
     <Center>
       <Container>
         <Box alignItems="center">
@@ -16,13 +34,13 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
                   <Heading size="md" ml="-1">
                     <FontAwesome name="bell" size={20} color="#165d31" />
                     <Stack p="1" space={1}></Stack>
-                    Upcoming Alarms
+                    {nextPrayer[0][0].toString()}
                   </Heading>
                 </Stack>
-                <Text fontSize={"md"} fontWeight="400">12:24 Dhurhr</Text>
+                <Text fontSize={"md"} fontWeight="400">{nextPrayer[0][1].toString()}</Text>
                 <HStack alignItems="center" space={4} justifyContent="space-between">
                   <HStack alignItems="center">
-                    <Link _text={{ color: "indigo.500", fontWeight: "medium", fontSize: "sm", onPress: () => navigation.navigate('AlarmTab') }} href="">
+                    <Link _text={{ color: "indigo.500", fontWeight: "medium", fontSize: "sm", onPress: () => navigation.navigate('AlarmTab', { alarms: alarms }) }} href="">
                       <FontAwesome name="eye" size={20} color="#165d31" />
                       <Stack p="1" space={1}></Stack>
                       View All
@@ -94,7 +112,7 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
         </HStack>
       </Container>
     </Center >
-  );
+  ) : <Image source={require('../assets/images/allahsoft-splash.png')} style={{ width: '100%', height: '100%' }} />
 }
 
 export default HomeScreen;
