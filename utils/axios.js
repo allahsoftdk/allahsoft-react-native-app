@@ -1,8 +1,9 @@
 import axios from "axios";
+import Constants from "expo-constants";
 const baseURL =
-  process.env.NODE_ENV === "production"
+  Constants.expoConfig.extra.ENVIRONMENT === "production"
     ? "https://admin.allahsoft.dk"
-    : // Alias for the ip of the host machine
+    : // Alias for the ip of the host machine when using an emulator
       "http://10.0.2.2";
 const axiosInstance = axios.create({
   baseURL,
