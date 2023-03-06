@@ -3,12 +3,12 @@ import { FontAwesome } from '@expo/vector-icons';
 import { Box, Center, Container, FlatList, Heading, Stack, Text } from "native-base";
 import { useWindowDimensions } from "react-native";
 import { TabView, SceneMap } from 'react-native-tab-view';
-import axios from "axios";
-import { PrayerTimes } from "../types";
+import { PrayerTime } from "../types";
+import { color } from 'native-base/lib/typescript/theme/styled-system';
 
 export default function AlarmScreen({ route, navigation }: { route: any, navigation: any }) {
     const layout = useWindowDimensions();
-    const [alarms, setAlarms] = React.useState<PrayerTimes>(route.params.alarms);
+    const [alarms, setAlarms] = React.useState<PrayerTime>(route.params.alarms);
 
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
@@ -22,13 +22,13 @@ export default function AlarmScreen({ route, navigation }: { route: any, navigat
                 <Container>
                     <Box alignItems="center">
                         <Stack p="3" space={3}>
-                            <Box minW={"250"} rounded="lg" overflow="hidden" borderColor="#165d31" borderWidth="1" _dark={{ borderColor: "coolGray.600", backgroundColor: "gray.700" }} _web={{ shadow: 2, borderWidth: 0 }} _light={{ backgroundColor: "gray.50" }}>
+                            <Box minW={"230"} rounded="lg" overflow="hidden" borderColor="#165d31" borderWidth="1" _dark={{ borderColor: "coolGray.600", backgroundColor: "gray.700" }} _web={{ shadow: 2, borderWidth: 0 }} _light={{ backgroundColor: "gray.50" }}>
                                 <Stack p="4" space={3}>
                                     <Stack space={2}>
                                         <Heading size="md" ml="-1">
                                             <FontAwesome name="bell" size={20} color="#165d31" />
                                             <Stack p="1" space={1}></Stack>
-                                            {item[0]}
+                                            Prayer: {item[0]}
                                         </Heading>
                                     </Stack>
                                     <Text fontSize={"md"} fontWeight="400">{item[1]}</Text>
@@ -48,13 +48,13 @@ export default function AlarmScreen({ route, navigation }: { route: any, navigat
                 <Container>
                     <Box alignItems="center">
                         <Stack p="3" space={3}>
-                            <Box minW={"250"} rounded="lg" overflow="hidden" borderColor="#165d31" borderWidth="1" _dark={{ borderColor: "coolGray.600", backgroundColor: "gray.700" }} _web={{ shadow: 2, borderWidth: 0 }} _light={{ backgroundColor: "gray.50" }}>
+                            <Box minW={"230"} rounded="lg" overflow="hidden" borderColor="#165d31" borderWidth="1" _dark={{ borderColor: "coolGray.600", backgroundColor: "gray.700" }} _web={{ shadow: 2, borderWidth: 0 }} _light={{ backgroundColor: "gray.50" }}>
                                 <Stack p="4" space={3}>
                                     <Stack space={2}>
                                         <Heading size="md" ml="-1">
                                             <FontAwesome name="bell" size={20} color="#165d31" />
                                             <Stack p="1" space={1}></Stack>
-                                            {item[0]}
+                                            Prayer: {item[0]}
                                         </Heading>
                                     </Stack>
                                     <Text fontSize={"md"} fontWeight="400">{item[1]}</Text>
