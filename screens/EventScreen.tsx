@@ -9,11 +9,6 @@ export default function EventScreen({ route, navigation }: { route: any, navigat
     const layout = useWindowDimensions();
     const [events, setEvents] = React.useState<Event[][]>(route.params.events);
 
-
-    React.useEffect(() => {
-        console.log(events);
-    }, []);
-
     return (
         <Center>
             <FlatList data={events} renderItem={({ item }) => (

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { FontAwesome } from '@expo/vector-icons';
-import { Box, Center, Container, FlatList, Heading, Stack, Text } from "native-base";
+import { Box, Center, Container, FlatList, Heading, Stack, Text, VStack } from "native-base";
 import { useWindowDimensions } from "react-native";
-import { TabView, SceneMap } from 'react-native-tab-view';
+import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { PrayerTime } from "../types";
 import { color } from 'native-base/lib/typescript/theme/styled-system';
 
@@ -17,7 +17,11 @@ export default function AlarmScreen({ route, navigation }: { route: any, navigat
     ]);
 
     const FirstRoute = () => (
-        <Center>
+        <Center pb={5}>
+            <VStack alignItems={"center"}>
+                <Text fontSize={"md"} fontWeight="400" color="#165d31">Copenhagen time zone</Text>
+                <Text fontSize={"md"} fontWeight="400" color="#165d31">MWL Calculation</Text>
+            </VStack>
             <FlatList data={alarms.today} renderItem={({ item }) => (
                 <Container>
                     <Box alignItems="center">
@@ -42,8 +46,11 @@ export default function AlarmScreen({ route, navigation }: { route: any, navigat
     );
 
     const SecondRoute = () => (
-
-        <Center>
+        <Center pb={5}>
+            <VStack alignItems={"center"}>
+                <Text fontSize={"md"} fontWeight="400" color="#165d31">Copenhagen time zone</Text>
+                <Text fontSize={"md"} fontWeight="400" color="#165d31">MWL Calculation</Text>
+            </VStack>
             <FlatList data={alarms.tomorrow} renderItem={({ item }) => (
                 <Container>
                     <Box alignItems="center">
@@ -75,10 +82,12 @@ export default function AlarmScreen({ route, navigation }: { route: any, navigat
     return (
         alarms.today !== undefined && alarms.tomorrow !== undefined ?
             <TabView
+                style={{ backgroundColor: '#fff' }}
                 navigationState={{ index, routes }}
                 renderScene={renderScene}
                 onIndexChange={setIndex}
                 initialLayout={{ width: layout.width }}
+                renderTabBar={props => <TabBar {...props} style={{ backgroundColor: '#165d31' }} />}
             />
             :
             <Center>
