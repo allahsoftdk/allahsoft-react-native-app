@@ -42,6 +42,7 @@ const ChatComponent = ({ chatRoom, navigation }: { chatRoom: ChatRoom, navigatio
         navigation.navigate("MessageTab", {
             id: chatRoom.id,
             name: chatRoomName,
+            loggedInUser: loggedInUser
         });
     };
 
