@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NativeBaseProvider, Box, Center, Heading, Text, Button, HStack, Spacer, VStack } from "native-base";
-import { FlatList, RefreshControl, useColorScheme } from "react-native";
+import { ActivityIndicator, FlatList, RefreshControl, useColorScheme } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axiosInstance from "../utils/axios";
 import { User } from "../types";
@@ -117,7 +117,7 @@ const UserProfileScreen = ({ navigation, route }: { navigation: any, route: any 
 
     return (
         <NativeBaseProvider>
-            {!loadFollowersDone || !loadIsFollowingDone || !loadPostsDone ? <Text>Loading...</Text> :
+            {!loadFollowersDone || !loadIsFollowingDone || !loadPostsDone ? <Center flex={1}><ActivityIndicator size="large" color="#165d31" /></Center> :
                 <Center>
                     <Box alignItems="center" paddingTop={10} >
                         <HStack>
