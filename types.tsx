@@ -128,8 +128,6 @@ export type QuranVerse = {
 }
 
 export type PrayerTime = {
-  city: string;
-  date: string;
   today: [string, string][];
   tomorrow: [string, string][];
 };
