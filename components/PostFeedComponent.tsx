@@ -4,7 +4,7 @@ import socket from "../utils/socket";
 import axiosInstance from "../utils/axios";
 import { Box, FlatList, Heading, Avatar, HStack, VStack, Text, Spacer, Center, NativeBaseProvider, View, ScrollView, Input, Button, Modal } from "native-base";
 import { Post, User } from "../types";
-import { ActivityIndicator, RefreshControl, TouchableOpacity, StyleSheet } from "react-native";
+import { ActivityIndicator, RefreshControl, TouchableOpacity, StyleSheet, useColorScheme } from "react-native";
 import { globalStyles } from "../styles/globalStyles";
 import { Keyboard } from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -88,9 +88,13 @@ const PostFeedComponent = () => {
         );
     };
 
+    const colorScheme = useColorScheme();
     return (
+
         <Box>
-            <Heading size="md" p={2} alignSelf="center" borderBottomColor={globalStyles.greenColor.backgroundColor} borderBottomWidth={2} borderRadius={2}>Your feed</Heading>
+            <Heading size="md" p={2} alignSelf="center" borderBottomColor={globalStyles.greenColor.backgroundColor} borderBottomWidth={2} borderRadius={2} style={{
+                color: colorScheme === 'dark' ? 'white' : 'black',
+            }}>Your feed</Heading>
             <HStack p={2} borderBottomColor={globalStyles.greenColor.backgroundColor} borderBottomWidth={2} borderRadius={2}>
                 <Input placeholder="Share your thoughts..." width="75%" marginRight={4} onChangeText={(text) => setThoughts(text)} value={thoughts} />
                 <Button style={globalStyles.greenColor} width="20%" onPress={createPost}>Post</Button>

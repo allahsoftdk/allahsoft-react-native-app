@@ -1,11 +1,11 @@
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, Box, HStack, Heading } from "native-base";
 import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { chatStyles } from "../styles/chatStyles";
 
 import { ChatMessage, ChatRoom, User } from "../types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useColorScheme } from "react-native";
 
 const ChatComponent = ({ chatRoom, navigation }: { chatRoom: ChatRoom, navigation: any }) => {
     const [message, setMessage] = useState<ChatMessage>();
@@ -45,29 +45,21 @@ const ChatComponent = ({ chatRoom, navigation }: { chatRoom: ChatRoom, navigatio
         });
     };
 
+    const colorScheme = useColorScheme();
     return (
-        <Pressable style={chatStyles.cchat} onPress={handleNavigation}>
-            <Ionicons
-                name='person-circle-outline'
-                size={45}
-                color='black'
-                style={chatStyles.cavatar}
-            />
-
-            <View style={chatStyles.crightContainer}>
-                <View>
-                    <Text style={chatStyles.cusername}>{chatRoomName}</Text>
-
-                    <Text style={chatStyles.cmessage}>
-                        {message?.message ? message.message : "No messages yet"}
-                    </Text>
-                </View>
-                <View>
-                    <Text style={chatStyles.ctime}>
-                        {message?.createdAt ? message.createdAt.toString().slice(0, 19).replace('T', ' ') : ""}
-                    </Text>
-                </View>
-            </View>
+        <Pressable onPress={handleNavigation}>
+            <Box width={"300"} rounded="lg" overflow="hidden" borderColor="#165d31" borderWidth="1" backgroundColor={"white"}>
+                <HStack p={6}>
+                    <Ionicons name='person-circle-outline' size={50} color='#165d31' />
+                    <View>
+                        <Heading>{chatRoomName}</Heading>
+                        <Text>{message?.message ? message.message : "No messages yet"}</Text>
+                    </View>
+                    <View>
+                        <Text>{message?.createdAt ? message.createdAt.toString().slice(0, 19).replace('T', ' ') : ""}</Text>
+                    </View>
+                </HStack>
+            </Box>
         </Pressable>
     );
 };

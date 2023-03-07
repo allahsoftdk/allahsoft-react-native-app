@@ -1,19 +1,10 @@
 import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
-import { View, Text, Pressable, SafeAreaView, FlatList } from "react-native";
-import { Feather } from "@expo/vector-icons";
+import { View, Text, Pressable, FlatList, Box, Heading, HStack, Center, Stack } from "native-base";
 import ChatComponent from "../components/ChatComponent";
-import { chatStyles } from "../styles/chatStyles";
-
-import Navigation from "../navigation";
 import axiosInstance from "../utils/axios";
-import socket from "../utils/socket";
 import { ChatRoom } from "../types";
 import { useFocusEffect } from "@react-navigation/native";
-import checkLoggedIn from "../utils/checkLogIn";
-import { Box, Button, Center } from "native-base";
-import { globalStyles } from "../styles/globalStyles";
 import { useColorScheme } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 const Chat = ({ navigation }: { navigation: any }) => {
@@ -31,28 +22,29 @@ const Chat = ({ navigation }: { navigation: any }) => {
     );
 
     return (
-        <SafeAreaView style={chatStyles.chatscreen}>
-            <View style={chatStyles.chattopContainer}>
-                <View style={chatStyles.chatheader}>
-                    <Text style={chatStyles.chatheading}>Chats</Text>
-                </View>
-            </View>
+        <Center>
+            <Box alignItems="center">
+                <Stack p="4" space={3}>
+                    <HStack alignItems='center' justifyContent='space-between' >
+                        <Heading fontSize={"3xl"} style={{ color: colorScheme === 'dark' ? 'white' : 'black' }} >Chat</Heading>
+                    </HStack>
 
-            <View style={chatStyles.chatlistContainer}>
-                {rooms.length > 0 ? (
-                    <FlatList
-                        data={rooms}
-                        renderItem={({ item }) => <ChatComponent chatRoom={item} navigation={navigation} />}
-                        keyExtractor={(item: ChatRoom) => item.id}
-                    />
-                ) : (
-                    <View style={chatStyles.chatemptyContainer}>
-                        <Text style={chatStyles.chatemptyText}>No rooms created!</Text>
-                        <Text>Go to a user profile and start a chat</Text>
-                    </View>
-                )}
-            </View>
-        </SafeAreaView>
+                    {/* <Stack p="4" space={3}> */}
+                    {rooms.length > 0 ? (
+                        <FlatList data={rooms} renderItem={({ item }) =>
+                            <ChatComponent chatRoom={item} navigation={navigation} />} keyExtractor={(item: ChatRoom) => item.id}
+                        />
+
+                    ) : (
+                        <HStack >
+                            <Text >No rooms created!</Text>
+                            <Text>Go to a user profile and start a chat</Text>
+                        </HStack>
+                    )}
+                    {/* </Stack> */}
+                </Stack>
+            </Box>
+        </Center>
     )
 };
 
