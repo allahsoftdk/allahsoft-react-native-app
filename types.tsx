@@ -127,12 +127,21 @@ export type QuranVerse = {
   data: Data;
 }
 
-export type PrayerTimes = {
+export type PrayerTime = {
   city: string;
   date: string;
   today: [string, string][];
   tomorrow: [string, string][];
 };
+
+export type Event = {
+  id: number
+  name: string
+  eventDate: string
+  eventFrom: string
+  eventTo: string
+};
+
 
 export type ChatMessage = {
   chatRoomId: number;
