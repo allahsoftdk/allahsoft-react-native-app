@@ -142,6 +142,7 @@ export type Event = {
 
 
 export type ChatMessage = {
+  id: Number;
   chatRoomId: number;
   userId: number;
   message: string;
