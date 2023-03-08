@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 
+// recreate this with support for darkmode
 export const chatStyles = StyleSheet.create({
   loginscreen: {
     flex: 1,
@@ -84,6 +85,15 @@ export const chatStyles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row",
   },
+  messaginginputContainerDarkMode: {
+    width: "100%",
+    minHeight: 100,
+    backgroundColor: "#1E1E1E",
+    paddingVertical: 30,
+    paddingHorizontal: 15,
+    justifyContent: "center",
+    flexDirection: "row",
+  },
   messaginginput: {
     borderWidth: 1,
     padding: 15,
@@ -91,9 +101,26 @@ export const chatStyles = StyleSheet.create({
     marginRight: 10,
     borderRadius: 20,
   },
+  messaginginputDarkMode: {
+    borderWidth: 1,
+    padding: 15,
+    flex: 1,
+    marginRight: 10,
+    borderRadius: 20,
+    backgroundColor: "#1E1E1E",
+    color: "#fff",
+  },
   messagingbuttonContainer: {
     width: "30%",
     backgroundColor: "green",
+    borderRadius: 3,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 50,
+  },
+  messagingbuttonContainerDarkMode: {
+    width: "30%",
+    backgroundColor: "#1E1E1E",
     borderRadius: 3,
     alignItems: "center",
     justifyContent: "center",

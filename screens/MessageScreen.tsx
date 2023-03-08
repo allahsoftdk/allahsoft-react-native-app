@@ -8,12 +8,14 @@ import axiosInstance from "../utils/axios";
 import { ChatMessage, ChatRoom, User } from "../types";
 import { Keyboard } from "react-native";
 import { ScrollView } from "native-base";
+import { useColorScheme } from "react-native";
 
 const MessagingScreen = ({ route, navigation }: { route: any, navigation: any }) => {
     const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
     const [message, setMessage] = useState("");
     const [user, setUser] = useState<User>({} as User);
     const scrollViewRef = useRef<FlatList>(null);
+    const colorScheme = useColorScheme();
 
     const { name, id, loggedInUser } = route.params;
 

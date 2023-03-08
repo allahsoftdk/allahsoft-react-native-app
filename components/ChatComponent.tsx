@@ -1,4 +1,4 @@
-import { View, Text, Pressable, Box, HStack, Heading, VStack } from "native-base";
+import { View, Text, Pressable, Box, HStack, Heading, VStack, Spacer } from "native-base";
 import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
@@ -49,15 +49,18 @@ const ChatComponent = ({ chatRoom, navigation }: { chatRoom: ChatRoom, navigatio
     const colorScheme = useColorScheme();
     return (
         <Pressable onPress={handleNavigation}>
-            <Box width={"100%"} rounded="lg" borderColor="#165d31" borderWidth="1" backgroundColor={"white"}>
+            <Box width={"100%"} rounded="lg" borderColor="#165d31" borderWidth="1" backgroundColor={"white"} shadow={2} marginBottom={2}>
                 <HStack p={6} space={2}>
                     <Ionicons name='person-circle-outline' size={50} color='#165d31' />
                     <VStack >
-                        <HStack  >
+                        <HStack space={6}>
                             <Heading>{chatRoomName}</Heading>
-                            <Text marginRight={10} style={{ position: 'absolute', right: 0 }} >{message?.createdAt ? message.createdAt.toString().slice(0, 19).replace('T', ' ') : ""}</Text>
                         </HStack>
-                        <Text marginRight={10} numberOfLines={1} ellipsizeMode="tail" >{message?.message ? message.message : "No messages yet"}</Text>
+                        <HStack space={4}>
+                            <Text marginRight={10} numberOfLines={1} ellipsizeMode="tail" >{message?.message ? message.message.length > 10 ? message.message.slice(0, 10) + "..." : message.message : "No messages yet"}</Text>
+                            <Spacer />
+                            <Text alignSelf="flex-end">{message?.createdAt ? message.createdAt.toString().slice(0, 19).replace('T', ' ') : ""}</Text>
+                        </HStack>
                     </VStack>
                 </HStack>
             </Box>
