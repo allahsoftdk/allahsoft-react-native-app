@@ -93,6 +93,7 @@ export const chatStyles = StyleSheet.create({
     paddingHorizontal: 15,
     justifyContent: "center",
     flexDirection: "row",
+    color: "white",
   },
   messaginginput: {
     borderWidth: 1,
@@ -100,6 +101,7 @@ export const chatStyles = StyleSheet.create({
     flex: 1,
     marginRight: 10,
     borderRadius: 20,
+    backgroundColor: "#fff",
   },
   messaginginputDarkMode: {
     borderWidth: 1,

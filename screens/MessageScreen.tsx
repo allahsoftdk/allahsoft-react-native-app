@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { View, TextInput, Text, FlatList, Pressable } from "react-native";
+import { TextInput, Text, FlatList, Pressable } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import MessageComponent from "../components/MessageComponent";
 import { chatStyles } from "../styles/chatStyles";
@@ -7,7 +7,7 @@ import socket from "../utils/socket";
 import axiosInstance from "../utils/axios";
 import { ChatMessage, ChatRoom, User } from "../types";
 import { Keyboard } from "react-native";
-import { ScrollView } from "native-base";
+import { ScrollView, View } from "native-base";
 import { useColorScheme } from "react-native";
 
 const MessagingScreen = ({ route, navigation }: { route: any, navigation: any }) => {
@@ -45,45 +45,47 @@ const MessagingScreen = ({ route, navigation }: { route: any, navigation: any })
     };
 
     return (
-        <View style={chatStyles.messagingscreen}>
-            <View
-                style={[
-                    chatStyles.messagingscreen,
-                    { paddingVertical: 15, paddingHorizontal: 10 },
-                ]}
-            >
-                {chatMessages[0] ? (
-                    <FlatList
-                        ref={scrollViewRef}
-                        onContentSizeChange={() =>
-                            scrollViewRef.current?.scrollToEnd({ animated: false })
-                        }
-                        nestedScrollEnabled
-                        data={chatMessages}
-                        renderItem={({ item }) => (
-                            <MessageComponent item={item} user={user} />
-                        )}
-                        keyExtractor={(item) => item.id.toString()}
-                    />
-                ) : (
-                    ""
-                )}
-            </View>
-
-            <View style={chatStyles.messaginginputContainer}>
-                <TextInput
-                    style={chatStyles.messaginginput}
-                    onChangeText={(value) => setMessage(value)}
-                    value={message}
-                />
-                <Pressable
-                    style={chatStyles.messagingbuttonContainer}
-                    onPress={handleNewMessage}
+        <View backgroundColor={colorScheme === "dark" ? "gray.800" : "white"} flex={1}>
+            <View style={chatStyles.messagingscreen}>
+                <View
+                    style={[
+                        chatStyles.messagingscreen,
+                        { paddingVertical: 15, paddingHorizontal: 10 },
+                    ]}
                 >
-                    <View>
-                        <Text style={{ color: "#f2f0f1", fontSize: 20 }}>SEND</Text>
-                    </View>
-                </Pressable>
+                    {chatMessages[0] ? (
+                        <FlatList
+                            ref={scrollViewRef}
+                            onContentSizeChange={() =>
+                                scrollViewRef.current?.scrollToEnd({ animated: false })
+                            }
+                            nestedScrollEnabled
+                            data={chatMessages}
+                            renderItem={({ item }) => (
+                                <MessageComponent item={item} user={user} />
+                            )}
+                            keyExtractor={(item) => item.id.toString()}
+                        />
+                    ) : (
+                        ""
+                    )}
+                </View>
+
+                <View style={colorScheme === "dark" ? chatStyles.messaginginputContainerDarkMode : chatStyles.messaginginputContainer}>
+                    <TextInput
+                        style={chatStyles.messaginginput}
+                        onChangeText={(value) => setMessage(value)}
+                        value={message}
+                    />
+                    <Pressable
+                        style={chatStyles.messagingbuttonContainer}
+                        onPress={handleNewMessage}
+                    >
+                        <View>
+                            <Text style={{ color: "#f2f0f1", fontSize: 20 }}>SEND</Text>
+                        </View>
+                    </Pressable>
+                </View>
             </View>
         </View>
     );

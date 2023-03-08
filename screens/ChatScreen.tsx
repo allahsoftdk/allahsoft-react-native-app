@@ -43,32 +43,34 @@ const Chat = ({ navigation }: { navigation: any }) => {
     }, []);
 
     return (
-        <Center>
-            <Box alignItems="center">
-                <Stack p="4">
-                    <HStack alignItems='center' justifyContent='space-between'>
-                        <Heading p={3} paddingTop={6} fontSize={"3xl"} style={{ color: colorScheme === 'dark' ? 'white' : 'black' }} >Chat</Heading>
-                    </HStack>
+        <View backgroundColor={colorScheme === "dark" ? "gray.800" : "white"} flex={1}>
+            <Center>
+                <Box alignItems="center">
+                    <Stack p="4">
+                        <HStack alignItems='center' justifyContent='space-between'>
+                            <Heading p={3} paddingTop={6} fontSize={"3xl"} style={{ color: colorScheme === 'dark' ? 'white' : 'black' }} >Chat</Heading>
+                        </HStack>
 
-                    <Stack p="4" space={3}>
-                        {rooms.length > 0 ? (
-                            <FlatList extraData={refreshing} data={rooms} renderItem={({ item }) =>
-                                <ChatComponent chatRoom={item} navigation={navigation} refreshing={refreshing} />}
-                                keyExtractor={(item: ChatRoom) => item.id}
-                                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}
-                                />}
-                            />
+                        <Stack p="4" space={3}>
+                            {rooms.length > 0 ? (
+                                <FlatList extraData={refreshing} data={rooms} renderItem={({ item }) =>
+                                    <ChatComponent chatRoom={item} navigation={navigation} refreshing={refreshing} />}
+                                    keyExtractor={(item: ChatRoom) => item.id}
+                                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}
+                                    />}
+                                />
 
-                        ) : (
-                            <VStack>
-                                <Text fontSize={"2xl"} color={colorScheme === 'dark' ? 'white' : 'black'}>No rooms created!</Text>
-                                <Text color={colorScheme === 'dark' ? 'white' : 'black'}>Go to a user profile and start a chat</Text>
-                            </VStack>
-                        )}
+                            ) : (
+                                <VStack>
+                                    <Text fontSize={"2xl"} color={colorScheme === 'dark' ? 'white' : 'black'}>No rooms created!</Text>
+                                    <Text color={colorScheme === 'dark' ? 'white' : 'black'}>Go to a user profile and start a chat</Text>
+                                </VStack>
+                            )}
+                        </Stack>
                     </Stack>
-                </Stack>
-            </Box>
-        </Center>
+                </Box>
+            </Center>
+        </View>
     )
 };
 

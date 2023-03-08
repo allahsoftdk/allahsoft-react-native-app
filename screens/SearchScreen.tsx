@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NativeBaseProvider, Box, Center, Heading, Text, FormControl, Button, HStack, Input, Link, VStack } from "native-base";
+import { NativeBaseProvider, Box, Center, Heading, Text, FormControl, Button, HStack, Input, Link, VStack, View } from "native-base";
 import { Pressable, TextInput, useColorScheme, ActivityIndicator } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -28,9 +28,11 @@ const SearchScreen = ({ navigation, route }: { navigation: any, route: any }) =>
 
     return (
         <NativeBaseProvider>
-            <Text padding={5} style={{ fontSize: 20, fontWeight: "bold", color: colorScheme === "dark" ? "white" : "black", textAlign: "center" }}>Find Users</Text>
-            <SearchBarComponent searchPhrase={searchPhrase} setSearchPhrase={setSearchPhrase} clicked={clicked} setClicked={setClicked} />
-            {!users ? <ActivityIndicator size="large" color="#0000ff" /> : <SearchList users={users} searchPhrase={searchPhrase} setClicked={setClicked} navigation={navigation} refreshing={refreshing} setRefreshing={setRefreshing} />}
+            <View backgroundColor={colorScheme === "dark" ? "gray.800" : "white"} flex={1}>
+                <Text padding={5} style={{ fontSize: 20, fontWeight: "bold", color: colorScheme === "dark" ? "white" : "black", textAlign: "center" }}>Find Users</Text>
+                <SearchBarComponent searchPhrase={searchPhrase} setSearchPhrase={setSearchPhrase} clicked={clicked} setClicked={setClicked} />
+                {!users ? <ActivityIndicator size="large" color="#0000ff" /> : <SearchList users={users} searchPhrase={searchPhrase} setClicked={setClicked} navigation={navigation} refreshing={refreshing} setRefreshing={setRefreshing} />}
+            </View>
         </NativeBaseProvider>
     )
 };

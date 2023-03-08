@@ -23,30 +23,32 @@ const QuranScreen = ({ navigation }: { navigation: any }) => {
 
     const renderItem = useCallback(({ item }: { item: any }) => {
         return (
-            <Pressable onPress={() => navigation.navigate('QuranChapterTab', { chapterId: item.id })}>
-                <Stack p="2">
-                    <Center>
-                        <Box width={"350"} rounded="lg" overflow="hidden" borderColor="#165d31" borderWidth="1" bg={"white"} >
-                            <Flex direction="row" p="2">
-                                <HStack p={2} paddingRight={"4"} >
-                                    <Heading color={"#165d31"} > {item.id}</Heading>
-                                </HStack>
-                                <View>
-                                    <Flex direction="column" >
-                                        <Heading color={"#165d31"} >  {item.name_simple}</Heading>
-                                        <Flex direction="row" >
-                                            <Text> {item.name_simple} </Text>
-                                            <View>
-                                                <Text> {item.verses_count}  Ayahs </Text>
-                                            </View>
+            <View backgroundColor={colorScheme === "dark" ? "gray.800" : "white"} flex={1}>
+                <Pressable onPress={() => navigation.navigate('QuranChapterTab', { chapterId: item.id })}>
+                    <Stack p="2">
+                        <Center>
+                            <Box width={"350"} rounded="lg" overflow="hidden" borderColor="#165d31" borderWidth="1" bg={"white"} >
+                                <Flex direction="row" p="2">
+                                    <HStack p={2} paddingRight={"4"} >
+                                        <Heading color={"#165d31"} > {item.id}</Heading>
+                                    </HStack>
+                                    <View>
+                                        <Flex direction="column" >
+                                            <Heading color={"#165d31"} >  {item.name_simple}</Heading>
+                                            <Flex direction="row" >
+                                                <Text> {item.name_simple} </Text>
+                                                <View>
+                                                    <Text> {item.verses_count}  Ayahs </Text>
+                                                </View>
+                                            </Flex>
                                         </Flex>
-                                    </Flex>
-                                </View>
-                            </Flex>
-                        </Box>
-                    </Center>
-                </Stack>
-            </Pressable>
+                                    </View>
+                                </Flex>
+                            </Box>
+                        </Center>
+                    </Stack>
+                </Pressable>
+            </View>
         )
     }, []);
 
