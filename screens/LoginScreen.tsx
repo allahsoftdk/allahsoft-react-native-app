@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import { NativeBaseProvider, Box, Center, Heading, Text, FormControl, Button, HStack, Input, Link, VStack, View } from "native-base";
-import { Pressable, TextInput, useColorScheme } from "react-native";
+import { useColorScheme } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
 import axiosInstance from "../utils/axios";
 
 const LoginScreen = ({ navigation, route }: { navigation: any, route: any }) => {

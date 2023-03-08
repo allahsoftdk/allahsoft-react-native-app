@@ -1,9 +1,9 @@
 import { View, Text } from "react-native";
-import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { chatStyles } from "../styles/chatStyles";
 import { ChatMessage, User } from "../types";
 import { useColorScheme } from "react-native";
+import React from "react";
 
 export default function MessageComponent({ item, user }: { item: ChatMessage; user: User }) {
     const status = item.userId !== user.id;

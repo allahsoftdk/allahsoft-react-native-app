@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-import socket from "../utils/socket";
 import axiosInstance from "../utils/axios";
-import { Box, FlatList, Heading, Avatar, HStack, VStack, Text, Spacer, Center, NativeBaseProvider, View, ScrollView, Input, Button, Modal, Pressable } from "native-base";
+import { Box, FlatList, Heading, HStack, VStack, Text, Spacer, View, Input, Button } from "native-base";
 import { Post, User } from "../types";
 import { ActivityIndicator, RefreshControl, TouchableOpacity, StyleSheet, useColorScheme } from "react-native";
 import { globalStyles } from "../styles/globalStyles";
 import { Keyboard } from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import EditPostModal from "./EditPostModal";
-import { AntDesign } from "@expo/vector-icons";
 
 const PostFeedComponent = () => {
     const [posts, setPosts] = useState<Post[]>([]);

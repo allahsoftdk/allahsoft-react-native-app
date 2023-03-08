@@ -1,14 +1,12 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { TextInput, Text, FlatList, Pressable } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import MessageComponent from "../components/MessageComponent";
 import { chatStyles } from "../styles/chatStyles";
 import socket from "../utils/socket";
-import axiosInstance from "../utils/axios";
 import { ChatMessage, ChatRoom, User } from "../types";
-import { Keyboard } from "react-native";
-import { ScrollView, View } from "native-base";
+import { View } from "native-base";
 import { useColorScheme } from "react-native";
+import React from "react";
 
 const MessagingScreen = ({ route, navigation }: { route: any, navigation: any }) => {
     const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);

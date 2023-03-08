@@ -1,10 +1,10 @@
-import React from "react";
-import { Button, Modal, FormControl, Input, Center, NativeBaseProvider } from "native-base";
+import { Button, Modal, FormControl, Input, Center } from "native-base";
 import { useState } from "react";
 import { Post } from "../types";
 import axiosInstance from "../utils/axios";
 import { globalStyles } from "../styles/globalStyles";
 import { Keyboard } from 'react-native';
+import React from "react";
 
 const EditPostModal = ({ post, onRefresh }: { post: Post, onRefresh: () => void }) => {
     const [showModal, setShowModal] = useState(false);

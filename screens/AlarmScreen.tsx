@@ -4,7 +4,6 @@ import { Box, Center, Container, FlatList, Heading, Stack, Text, VStack, View } 
 import { useColorScheme, useWindowDimensions } from "react-native";
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { PrayerTime } from "../types";
-import { color } from 'native-base/lib/typescript/theme/styled-system';
 
 export default function AlarmScreen({ route, navigation }: { route: any, navigation: any }) {
     const layout = useWindowDimensions();

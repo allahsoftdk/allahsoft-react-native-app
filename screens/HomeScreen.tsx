@@ -1,9 +1,8 @@
 import { FontAwesome } from '@expo/vector-icons';
-import { Box, Center, Container, Heading, HStack, Link, Pressable, Row, Stack, Text, View } from 'native-base';
-import { FlatList, useColorScheme, ActivityIndicator } from 'react-native';
+import { Box, Center, Heading, HStack, Link, Pressable, Stack, Text, View } from 'native-base';
+import { useColorScheme, ActivityIndicator } from 'react-native';
 import React, { useEffect } from "react";
 import { Event, PrayerTime } from "../types";
-import axios from 'axios';
 import axiosInstance from '../utils/axios';
 
 const HomeScreen = ({ navigation }: { navigation: any }) => {

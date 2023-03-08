@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
-import { View, Text, Pressable, FlatList, Box, Heading, HStack, Center, Stack, VStack } from "native-base";
+import React, { useCallback, useEffect, useState } from "react";
+import { View, Text, FlatList, Box, Heading, HStack, Center, Stack, VStack } from "native-base";
 import ChatComponent from "../components/ChatComponent";
 import axiosInstance from "../utils/axios";
 import { ChatRoom } from "../types";

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { Text, Box, Center, Container, Heading, HStack, Stack, Input, View } from "native-base";
+import { useState } from "react";
+import { Text, Box, Center, Heading, HStack, Stack, Input, View } from "native-base";
 import { Pressable, useColorScheme } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { toHijri, toGregorian } from "hijri-converter";
+import React from "react";
 
 const HijriScreen = ({ navigation }: { navigation: any }) => {
     const [textDate, setMyText] = useState("")

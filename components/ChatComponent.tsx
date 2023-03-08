@@ -1,11 +1,12 @@
-import { View, Text, Pressable, Box, HStack, Heading, VStack, Spacer } from "native-base";
-import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
+import { Text, Pressable, Box, HStack, Heading, VStack } from "native-base";
+import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 
 import { ChatMessage, ChatRoom, User } from "../types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useColorScheme } from "react-native";
+import React from "react";
 
 const ChatComponent = ({ chatRoom, navigation, refreshing }: { chatRoom: ChatRoom, navigation: any, refreshing: any }) => {
     const [message, setMessage] = useState<ChatMessage>();
@@ -49,7 +50,7 @@ const ChatComponent = ({ chatRoom, navigation, refreshing }: { chatRoom: ChatRoo
 
     return (
         <Pressable onPress={handleNavigation}>
-            <Box width={"350"} rounded="lg" borderColor="#165d31" borderWidth="1" backgroundColor={"white"} shadow={2} marginBottom={2}>
+            <Box width={325} rounded="lg" borderColor="#165d31" borderWidth="1" backgroundColor={"white"} shadow={2} marginBottom={2}>
                 <HStack p={6} space={2}>
                     <Ionicons name='person-circle-outline' size={50} color='#165d31' />
                     <VStack >

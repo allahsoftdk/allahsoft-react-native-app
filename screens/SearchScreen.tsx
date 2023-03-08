@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { NativeBaseProvider, Box, Center, Heading, Text, FormControl, Button, HStack, Input, Link, VStack, View } from "native-base";
-import { Pressable, TextInput, useColorScheme, ActivityIndicator } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
-import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
+import { NativeBaseProvider, Text, View } from "native-base";
+import { useColorScheme, ActivityIndicator } from "react-native";
 import axiosInstance from "../utils/axios";
 import SearchBarComponent from "../components/SearchBarComponent";
 import SearchList from "../components/SearchList";
-import checkLoggedIn from "../utils/checkLogIn";
-import { globalStyles } from "../styles/globalStyles";
 
 const SearchScreen = ({ navigation, route }: { navigation: any, route: any }) => {
     const [searchPhrase, setSearchPhrase] = useState("");
