@@ -54,8 +54,8 @@ const ChatComponent = ({ chatRoom, navigation, refreshing }: { chatRoom: ChatRoo
                     <Ionicons name='person-circle-outline' size={50} color='#165d31' />
                     <VStack >
                         <HStack space={2}>
-                            <Heading>{chatRoomName}</Heading>
-                            <Text alignSelf="flex-end">{message?.createdAt ? message.createdAt.toString().slice(11, 16) : ""}</Text>
+                            <Heading>{chatRoomName ? chatRoomName.length > 10 ? chatRoomName.slice(0, 10) + "..." : chatRoomName : "No name"}</Heading>
+                            <Text paddingLeft={4} paddingTop={1}>{message?.createdAt ? message.createdAt.toString().slice(11, 16) : ""}</Text>
                         </HStack>
                         <HStack space={4}>
                             <Text numberOfLines={1} ellipsizeMode="tail" >{message?.message ? message.message.length > 10 ? message.message.slice(0, 10) + "..." : message.message : "No messages yet"}</Text>
