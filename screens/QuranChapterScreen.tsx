@@ -45,8 +45,8 @@ const QuranChapterScreen = ({ navigation, route }: { navigation: any, route: any
 
     const colorScheme = useColorScheme();
     return quranVerse.data ? (
-        <Box style={{ paddingBottom: 50 }}>
-            <Heading fontSize="xl" p="4" pb="3">Ayah</Heading>
+        <Box paddingBottom={50} alignSelf={"center"}>
+            <Heading style={{ color: colorScheme === 'dark' ? 'white' : 'black' }} fontSize="xl" p="4" pb="3">Ayah</Heading>
             <FlatList
                 data={quranVerse.data.ayahs}
                 renderItem={renderItem}

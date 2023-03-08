@@ -1,6 +1,8 @@
 import React, { PureComponent, useCallback, useState } from "react";
 import { Text, Box, Center, Container, Heading, HStack, Stack, Input, Avatar, Spacer, VStack, Flex, View, Link } from "native-base";
 import { FlatList, Pressable, useColorScheme } from "react-native";
+import { NavigationContainer, DefaultTheme, DarkTheme, useFocusEffect } from '@react-navigation/native';
+
 import { FontAwesome } from "@expo/vector-icons";
 import axios from "axios";
 import { QuranChapters } from "../types";
@@ -55,8 +57,8 @@ const QuranScreen = ({ navigation }: { navigation: any }) => {
 
     const colorScheme = useColorScheme();
     return (
-        <Box>
-            <Heading fontSize="xl" p="4" pb="3">Surah</Heading>
+        <Box alignSelf={"center"} paddingBottom={50} >
+            <Heading style={{ color: colorScheme === 'dark' ? 'white' : 'black' }} fontSize="xl" p="4" pb="3">Surah</Heading>
             <FlatList
                 style={{ paddingBottom: 400 }}
                 data={quranChapters.chapters}

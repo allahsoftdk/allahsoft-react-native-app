@@ -21,7 +21,7 @@ const EditPostModal = ({ post, onRefresh }: { post: Post, onRefresh: () => void 
     };
 
     return <Center>
-        <Button onPress={() => setShowModal(true)} style={globalStyles.greenColor} size="sm" variant="solid" position="absolute" right="0" top="0" zIndex={1}> Edit </Button>
+        <Button onPress={() => setShowModal(true)} style={globalStyles.greenColor} > Edit </Button>
         <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
             <Modal.Content maxWidth="400px">
                 <Modal.CloseButton />
@@ -52,10 +52,6 @@ const EditPostModal = ({ post, onRefresh }: { post: Post, onRefresh: () => void 
 
 export default ({ post, onRefresh }: { post: Post, onRefresh: () => void }) => {
     return (
-        <NativeBaseProvider>
-            <Center flex={1} px="3">
-                <EditPostModal post={post} onRefresh={onRefresh} />
-            </Center>
-        </NativeBaseProvider>
+        <EditPostModal post={post} onRefresh={onRefresh} />
     );
 };
