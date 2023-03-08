@@ -61,7 +61,8 @@ const UserProfileScreen = ({ navigation, route }: { navigation: any, route: any 
         axiosInstance.post(`/api/chatRoom/${user.id}`).then((res) => {
             navigation.navigate("MessageTab", {
                 id: res.data.id,
-                name: res.data.chatRoomParticipants.filter((participant: any) => participant.id === user.id)[0].name
+                name: res.data.chatRoomParticipants.filter((participant: any) => participant.id === user.id)[0].name,
+                loggedInUser: loggedInUser
             });
         }).catch((err) => {
             setErrorMessage(err.response.data.message);
@@ -151,7 +152,7 @@ const UserProfileScreen = ({ navigation, route }: { navigation: any, route: any 
         setRefreshing(true);
         setTimeout(() => {
             setRefreshing(false);
-        }, 2000);
+        }, 1500);
     }, []);
 
     const colorScheme = useColorScheme();

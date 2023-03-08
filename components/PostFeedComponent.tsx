@@ -18,6 +18,7 @@ const PostFeedComponent = () => {
     const [loggedInUser, setLoggedInUser] = useState<User>();
     const [loading, setLoading] = useState(true);
     const [offset, setOffset] = useState(1);
+    const [isFocused, setIsFocused] = useState(false);
 
     const getLoggedInUser = async () => {
         try {
@@ -34,7 +35,7 @@ const PostFeedComponent = () => {
         setRefreshing(true);
         setTimeout(() => {
             setRefreshing(false);
-        }, 2000);
+        }, 1500);
     }, []);
 
     useEffect(() => {

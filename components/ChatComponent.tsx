@@ -7,10 +7,11 @@ import { ChatMessage, ChatRoom, User } from "../types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useColorScheme } from "react-native";
 
-const ChatComponent = ({ chatRoom, navigation }: { chatRoom: ChatRoom, navigation: any }) => {
+const ChatComponent = ({ chatRoom, navigation, refreshing }: { chatRoom: ChatRoom, navigation: any, refreshing: any }) => {
     const [message, setMessage] = useState<ChatMessage>();
     const [loggedInUser, setLoggedInUser] = useState<User>();
     const [chatRoomName, setChatRoomName] = useState<string>("");
+    const colorScheme = useColorScheme();
 
     const getLoggedInUser = async () => {
         try {
@@ -35,7 +36,7 @@ const ChatComponent = ({ chatRoom, navigation }: { chatRoom: ChatRoom, navigatio
 
     useLayoutEffect(() => {
         setMessage(chatRoom.chatMessages ? chatRoom.chatMessages[chatRoom.chatMessages.length - 1] : undefined);
-    }, []);
+    }, [refreshing]);
 
 
     const handleNavigation = () => {
@@ -46,7 +47,6 @@ const ChatComponent = ({ chatRoom, navigation }: { chatRoom: ChatRoom, navigatio
         });
     };
 
-    const colorScheme = useColorScheme();
     return (
         <Pressable onPress={handleNavigation}>
             <Box width={"100%"} rounded="lg" borderColor="#165d31" borderWidth="1" backgroundColor={"white"} shadow={2} marginBottom={2}>
