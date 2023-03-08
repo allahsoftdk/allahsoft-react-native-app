@@ -13,11 +13,10 @@ const MessagingScreen = ({ route, navigation }: { route: any, navigation: any })
     const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
     const [message, setMessage] = useState("");
     const [user, setUser] = useState<User>({} as User);
+    const scrollViewRef = useRef<FlatList>(null);
 
-    //👇🏻 Access the chatroom's name and id, and the logged in user from the route params
     const { name, id, loggedInUser } = route.params;
 
-    //👇🏻 Sets the header title to the name chatroom's name
     useLayoutEffect(() => {
         navigation.setOptions({ title: name });
         setUser(loggedInUser);
@@ -37,7 +36,7 @@ const MessagingScreen = ({ route, navigation }: { route: any, navigation: any })
         socket.emit("newMessage", {
             message: message,
             chat_room_id: id,
-            user_id: user.id,
+            user_id: user.id
         });
 
         setMessage("");
@@ -53,8 +52,12 @@ const MessagingScreen = ({ route, navigation }: { route: any, navigation: any })
             >
                 {chatMessages[0] ? (
                     <FlatList
-                        inverted
-                        data={[...chatMessages].reverse()}
+                        ref={scrollViewRef}
+                        onContentSizeChange={() =>
+                            scrollViewRef.current?.scrollToEnd({ animated: false })
+                        }
+                        nestedScrollEnabled
+                        data={chatMessages}
                         renderItem={({ item }) => (
                             <MessageComponent item={item} user={user} />
                         )}
