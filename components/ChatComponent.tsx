@@ -49,17 +49,16 @@ const ChatComponent = ({ chatRoom, navigation }: { chatRoom: ChatRoom, navigatio
     const colorScheme = useColorScheme();
     return (
         <Pressable onPress={handleNavigation}>
-            <Box width={"100%"} rounded="lg" borderColor="#165d31" borderWidth="1" backgroundColor={"white"} shadow={2} marginBottom={2}>
+            <Box width={"350"} rounded="lg" borderColor="#165d31" borderWidth="1" backgroundColor={"white"} shadow={2} marginBottom={2}>
                 <HStack p={6} space={2}>
                     <Ionicons name='person-circle-outline' size={50} color='#165d31' />
                     <VStack >
-                        <HStack space={6}>
+                        <HStack space={2}>
                             <Heading>{chatRoomName}</Heading>
+                            <Text alignSelf="flex-end">{message?.createdAt ? message.createdAt.toString().slice(11, 16) : ""}</Text>
                         </HStack>
                         <HStack space={4}>
-                            <Text marginRight={10} numberOfLines={1} ellipsizeMode="tail" >{message?.message ? message.message.length > 10 ? message.message.slice(0, 10) + "..." : message.message : "No messages yet"}</Text>
-                            <Spacer />
-                            <Text alignSelf="flex-end">{message?.createdAt ? message.createdAt.toString().slice(0, 19).replace('T', ' ') : ""}</Text>
+                            <Text numberOfLines={1} ellipsizeMode="tail" >{message?.message ? message.message.length > 10 ? message.message.slice(0, 10) + "..." : message.message : "No messages yet"}</Text>
                         </HStack>
                     </VStack>
                 </HStack>
