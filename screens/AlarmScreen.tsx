@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import { Box, Center, Container, FlatList, Heading, Stack, Text, VStack } from "native-base";
-import { useWindowDimensions } from "react-native";
+import { useColorScheme, useWindowDimensions } from "react-native";
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { PrayerTime } from "../types";
 import { color } from 'native-base/lib/typescript/theme/styled-system';
@@ -16,11 +16,12 @@ export default function AlarmScreen({ route, navigation }: { route: any, navigat
         { key: 'second', title: 'Tomorrow', alarms: alarms },
     ]);
 
+    const colorScheme = useColorScheme();
     const FirstRoute = () => (
         <Center pb={5}>
             <VStack alignItems={"center"}>
-                <Text fontSize={"md"} fontWeight="400" color="#165d31">Copenhagen time zone</Text>
-                <Text fontSize={"md"} fontWeight="400" color="#165d31">MWL Calculation</Text>
+                <Text fontSize={"md"} fontWeight="400" style={{ color: colorScheme === 'dark' ? 'white' : 'black' }}>Copenhagen time zone</Text>
+                <Text fontSize={"md"} fontWeight="400" style={{ color: colorScheme === 'dark' ? 'white' : 'black' }}>MWL Calculation</Text>
             </VStack>
             <FlatList data={alarms.today} renderItem={({ item }) => (
                 <Container>
@@ -48,8 +49,8 @@ export default function AlarmScreen({ route, navigation }: { route: any, navigat
     const SecondRoute = () => (
         <Center pb={5}>
             <VStack alignItems={"center"}>
-                <Text fontSize={"md"} fontWeight="400" color="#165d31">Copenhagen time zone</Text>
-                <Text fontSize={"md"} fontWeight="400" color="#165d31">MWL Calculation</Text>
+                <Text fontSize={"md"} fontWeight="400" style={{ color: colorScheme === 'dark' ? 'white' : 'black' }}>Copenhagen time zone</Text>
+                <Text fontSize={"md"} fontWeight="400" style={{ color: colorScheme === 'dark' ? 'white' : 'black' }}>MWL Calculation</Text>
             </VStack>
             <FlatList data={alarms.tomorrow} renderItem={({ item }) => (
                 <Container>
@@ -82,7 +83,7 @@ export default function AlarmScreen({ route, navigation }: { route: any, navigat
     return (
         alarms.today !== undefined && alarms.tomorrow !== undefined ?
             <TabView
-                style={{ backgroundColor: '#fff' }}
+                // style={{ backgroundColor: '#fff' }}
                 navigationState={{ index, routes }}
                 renderScene={renderScene}
                 onIndexChange={setIndex}

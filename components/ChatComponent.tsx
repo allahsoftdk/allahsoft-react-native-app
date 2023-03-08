@@ -1,4 +1,4 @@
-import { View, Text, Pressable, Box, HStack, Heading } from "native-base";
+import { View, Text, Pressable, Box, HStack, Heading, VStack } from "native-base";
 import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
@@ -49,16 +49,16 @@ const ChatComponent = ({ chatRoom, navigation }: { chatRoom: ChatRoom, navigatio
     const colorScheme = useColorScheme();
     return (
         <Pressable onPress={handleNavigation}>
-            <Box width={"300"} rounded="lg" overflow="hidden" borderColor="#165d31" borderWidth="1" backgroundColor={"white"}>
-                <HStack p={6}>
+            <Box width={"100%"} rounded="lg" borderColor="#165d31" borderWidth="1" backgroundColor={"white"}>
+                <HStack p={6} space={2}>
                     <Ionicons name='person-circle-outline' size={50} color='#165d31' />
-                    <View>
-                        <Heading>{chatRoomName}</Heading>
-                        <Text>{message?.message ? message.message : "No messages yet"}</Text>
-                    </View>
-                    <View>
-                        <Text>{message?.createdAt ? message.createdAt.toString().slice(0, 19).replace('T', ' ') : ""}</Text>
-                    </View>
+                    <VStack >
+                        <HStack  >
+                            <Heading>{chatRoomName}</Heading>
+                            <Text marginRight={10} style={{ position: 'absolute', right: 0 }} >{message?.createdAt ? message.createdAt.toString().slice(0, 19).replace('T', ' ') : ""}</Text>
+                        </HStack>
+                        <Text marginRight={10} numberOfLines={1} ellipsizeMode="tail" >{message?.message ? message.message : "No messages yet"}</Text>
+                    </VStack>
                 </HStack>
             </Box>
         </Pressable>

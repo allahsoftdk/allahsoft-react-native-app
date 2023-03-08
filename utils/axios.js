@@ -4,7 +4,7 @@ const baseURL =
   Constants.expoConfig.extra.ENVIRONMENT === "production"
     ? "https://admin.allahsoft.dk"
     : // Alias for the ip of the host machine when using an emulator
-    "http://10.142.112.125";
+    "http://10.142.120.11";
 const axiosInstance = axios.create({
   baseURL,
   timeout: 10000,
