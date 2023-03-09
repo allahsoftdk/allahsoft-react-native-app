@@ -34,6 +34,7 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
   useEffect(() => {
     axiosInstance.get("api/event").then((res) => {
       res.data = Object.entries(res.data);
+      console.log(res.data);
       setEvents(res.data);
       setNextEvent(res.data.filter((event: any) => {
         return new Date(event[1].eventFrom) > new Date();
@@ -92,15 +93,16 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
                     </Heading>
                   </Stack>
                   <HStack>
-                    <Text fontSize={"md"} fontWeight="600">{!nextEvent ? "test" : nextEvent[0][1].name}</Text>
-                    <Text fontSize={"md"} fontWeight="400"> {!nextEvent ? "test" : nextEvent[0][1].eventFrom} - {nextEvent[0][1].eventTo} </Text>
+                    {/* This shit does not work for some reason */}
+                    {/* <Text fontSize={"md"} fontWeight="600">{!nextEvent ? "test" : nextEvent[0][1].name}</Text>
+                    <Text fontSize={"md"} fontWeight="400"> {!nextEvent ? "test" : nextEvent[0][1].eventFrom} - {nextEvent[0][1].eventTo} </Text> */}
                   </HStack>
                   <HStack alignItems="center" space={4} justifyContent="space-between">
                     <HStack alignItems="center">
                       <Link _text={{ color: "indigo.500", fontWeight: "medium", fontSize: "sm", onPress: () => navigation.navigate('EventTab', { events: events }) }} href="">
                         <FontAwesome name="eye" size={20} color="#165d31" />
                         <Stack p="1" space={1}></Stack>
-                        View All
+                        View All Events
                       </Link>
                     </HStack>
                   </HStack>
