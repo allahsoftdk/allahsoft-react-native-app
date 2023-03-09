@@ -34,7 +34,6 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
   useEffect(() => {
     axiosInstance.get("api/event").then((res) => {
       res.data = Object.entries(res.data);
-      console.log(res.data);
       setEvents(res.data);
       setNextEvent(res.data.filter((event: any) => {
         return new Date(event[1].eventFrom) > new Date();
