@@ -1,4 +1,4 @@
-import { Center, Button, Box, Heading, VStack, FormControl, Input } from "native-base";
+import { Center, Button, Box, Heading, VStack, FormControl, Input, View } from "native-base";
 
 import React from "react";
 import { useColorScheme } from "react-native";
@@ -21,33 +21,37 @@ const SignupScreen = ({ navigation }: { navigation: any }) => {
         });
     };
 
-    return <Center w="100%">
-        <Box safeArea p="2" w="90%" maxW="290" py="8">
-            <Heading size="lg" fontWeight="600" style={{ color: colorScheme == 'dark' ? 'white' : 'black' }}>Sign up</Heading>
-            {error ? <Heading size="sm" fontWeight="600" color="red.500" _dark={{ color: "warmGray.800" }}>
-                {error}
-            </Heading> : null}
-            <VStack space={3} mt="5">
-                <FormControl>
-                    <FormControl.Label>Email</FormControl.Label>
-                    <Input style={{ color: colorScheme == 'dark' ? 'white' : 'black' }} onChangeText={(text) => setEmail(text)} />
-                </FormControl>
-                <FormControl>
-                    <FormControl.Label>Username</FormControl.Label>
-                    <Input style={{ color: colorScheme == 'dark' ? 'white' : 'black' }} onChangeText={(text) => setUsername(text)} />
-                </FormControl>
-                <FormControl>
-                    <FormControl.Label>Password</FormControl.Label>
-                    <Input style={{ color: colorScheme == 'dark' ? 'white' : 'black' }} secureTextEntry={true} onChangeText={(text) => setPassword(text)} />
-                </FormControl>
-                <FormControl>
-                    <FormControl.Label>Confirm Password</FormControl.Label>
-                    <Input style={{ color: colorScheme == 'dark' ? 'white' : 'black' }} secureTextEntry={true} onChangeText={(text) => setConfirmPassword(text)} />
-                </FormControl>
-                <Button mt="2" style={{ backgroundColor: "#165d31" }} onPress={signup}> Sign Up </Button>
-            </VStack>
-        </Box>
-    </Center>;
+    return (
+        <View backgroundColor={colorScheme === "dark" ? "gray.800" : "white"} flex={1}>
+            <Center w="100%">
+                <Box safeArea p="2" w="90%" maxW="290" py="8">
+                    <Heading size="lg" fontWeight="600" style={{ color: colorScheme == 'dark' ? 'white' : 'black' }}>Sign up</Heading>
+                    {error ? <Heading size="sm" fontWeight="600" color="red.500" _dark={{ color: "warmGray.800" }}>
+                        {error}
+                    </Heading> : null}
+                    <VStack space={3} mt="5">
+                        <FormControl>
+                            <FormControl.Label _text={{ color: colorScheme == 'dark' ? 'white' : 'dark' }}>Email</FormControl.Label>
+                            <Input style={{ color: colorScheme == 'dark' ? 'white' : 'black' }} onChangeText={(text) => setEmail(text)} />
+                        </FormControl>
+                        <FormControl>
+                            <FormControl.Label _text={{ color: colorScheme == 'dark' ? 'white' : 'dark' }}>Username</FormControl.Label>
+                            <Input style={{ color: colorScheme == 'dark' ? 'white' : 'black' }} onChangeText={(text) => setUsername(text)} />
+                        </FormControl>
+                        <FormControl>
+                            <FormControl.Label _text={{ color: colorScheme == 'dark' ? 'white' : 'dark' }}>Password</FormControl.Label>
+                            <Input style={{ color: colorScheme == 'dark' ? 'white' : 'black' }} secureTextEntry={true} onChangeText={(text) => setPassword(text)} />
+                        </FormControl>
+                        <FormControl>
+                            <FormControl.Label _text={{ color: colorScheme == 'dark' ? 'white' : 'dark' }}>Confirm Password</FormControl.Label>
+                            <Input style={{ color: colorScheme == 'dark' ? 'white' : 'black' }} secureTextEntry={true} onChangeText={(text) => setConfirmPassword(text)} />
+                        </FormControl>
+                        <Button mt="2" style={{ backgroundColor: "#165d31" }} onPress={signup}> Sign Up </Button>
+                    </VStack>
+                </Box>
+            </Center>
+        </View>
+    );
 };
 
 export default SignupScreen;

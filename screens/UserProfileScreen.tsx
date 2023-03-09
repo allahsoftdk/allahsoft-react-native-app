@@ -61,7 +61,8 @@ const UserProfileScreen = ({ navigation, route }: { navigation: any, route: any 
         axiosInstance.post(`/api/chatRoom/${user.id}`).then((res) => {
             navigation.navigate("MessageTab", {
                 id: res.data.id,
-                name: res.data.chatRoomParticipants.filter((participant: any) => participant.id === user.id)[0].name
+                name: res.data.chatRoomParticipants.filter((participant: any) => participant.id === user.id)[0].name,
+                loggedInUser: loggedInUser
             });
         }).catch((err) => {
             setErrorMessage(err.response.data.message);
@@ -151,73 +152,74 @@ const UserProfileScreen = ({ navigation, route }: { navigation: any, route: any 
         setRefreshing(true);
         setTimeout(() => {
             setRefreshing(false);
-        }, 2000);
+        }, 1500);
     }, []);
 
     const colorScheme = useColorScheme();
     return (
         <NativeBaseProvider>
-            {!loadFollowersDone || !loadIsFollowingDone || !loadPostsDone ? <Center flex={1}><ActivityIndicator size="large" color="#165d31" /></Center> :
-                <Center>
-                    <Box alignItems="center" paddingTop={10} >
-                        <HStack>
-                            {!!errorMessage && <Text>{errorMessage}</Text>}
-                            <Heading style={{ color: colorScheme === 'dark' ? 'white' : 'black' }} size="xl" ml="-1">{user.name}</Heading>
-                        </HStack>
-
-                        {isOwnProfile ? <Text></Text> :
-                            <HStack p={4} space={2}>
-                                <Button onPress={createChat} bg="#165d31">Message</Button>
-                                {isFollowing ? <Button onPress={unfollowUser} bg="#165d31">Unfollow</Button> : <Button onPress={followUser} bg="#165d31">Follow</Button>}
+            <View backgroundColor={colorScheme === "dark" ? "gray.800" : "white"} flex={1}>
+                {!loadFollowersDone || !loadIsFollowingDone || !loadPostsDone ? <Center flex={1}><ActivityIndicator size="large" color="#165d31" /></Center> :
+                    <Center>
+                        <Box alignItems="center" paddingTop={10} >
+                            <HStack>
+                                {!!errorMessage && <Text>{errorMessage}</Text>}
+                                <Heading style={{ color: colorScheme === 'dark' ? 'white' : 'black' }} size="xl" ml="-1">{user.name}</Heading>
                             </HStack>
-                        }
-                        <HStack paddingBottom={4}>
-                            <Text style={{ color: colorScheme === 'dark' ? 'white' : 'black' }} >{followers} followers</Text>
-                        </HStack>
-                        <HStack>
-                            {posts.length == 0 ? <Text style={{ color: colorScheme === 'dark' ? 'white' : 'black' }} >No posts yet</Text> : <Text></Text>}
-                        </HStack>
-                        <FlatList data={posts} renderItem={({ item }) => (
-                            <View p={2}>
-                                <Box width={350} borderWidth={1} borderColor={"#165d31"} borderRadius={8} background={"white"} >
-                                    <HStack p={2}>
-                                        <VStack ml={2}>
-                                            <Text fontSize="md" bold>{item.user.name}</Text>
-                                        </VStack>
-                                        <Spacer />
-                                        <VStack mr={2}>
-                                            <Text fontSize="sm" color="gray.500">{new Date(item.updatedAt).toLocaleString()}</Text>
-                                            {item.isUpdated ? <Text fontSize="sm" color="gray.500" alignSelf="flex-end">Edited</Text> : null}
-                                        </VStack>
-                                    </HStack>
-                                    <VStack p={2}>
-                                        <Text fontSize="md">{item.description}</Text>
-                                    </VStack>
-                                    <HStack p={2} space={6} >
-                                        <HStack space={2}>
-                                            {loggedInUser?.id === item.user.id ? <EditPostModal post={item} onRefresh={onRefresh} /> : null}
-                                        </HStack>
-                                        <HStack space={2} >
-                                            <Text fontSize="md" bold>Comments</Text>
-                                            <Text fontSize="md" bold>{item.postComments.length}</Text>
-                                        </HStack>
-                                        <HStack space={2} >
-                                            <Pressable onPress={() => item.liked ? unLikePost(item.id) : likePost(item.id)}>
-                                                <AntDesign name={item.liked ? "heart" : "hearto"} size={24} color={item.liked ? "red" : "black"} />
-                                                <Text fontSize="md" bold>{item.likes}</Text>
-                                            </Pressable>
-                                        </HStack>
-                                    </HStack>
-                                </Box>
-                            </View>
 
-                        )}
-                            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-                        />
-                    </Box>
-                </Center>
-            }
+                            {isOwnProfile ? <Text></Text> :
+                                <HStack p={4} space={2}>
+                                    <Button onPress={createChat} bg="#165d31">Message</Button>
+                                    {isFollowing ? <Button onPress={unfollowUser} bg="#165d31">Unfollow</Button> : <Button onPress={followUser} bg="#165d31">Follow</Button>}
+                                </HStack>
+                            }
+                            <HStack paddingBottom={4}>
+                                <Text style={{ color: colorScheme === 'dark' ? 'white' : 'black' }} >{followers} followers</Text>
+                            </HStack>
+                            <HStack>
+                                {posts.length == 0 ? <Text style={{ color: colorScheme === 'dark' ? 'white' : 'black' }} >No posts yet</Text> : <Text></Text>}
+                            </HStack>
+                            <FlatList data={posts} renderItem={({ item }) => (
+                                <View p={2}>
+                                    <Box width={350} borderWidth={1} borderColor={"#165d31"} borderRadius={8} background={"white"} >
+                                        <HStack p={2}>
+                                            <VStack ml={2}>
+                                                <Text fontSize="md" bold>{item.user.name}</Text>
+                                            </VStack>
+                                            <Spacer />
+                                            <VStack mr={2}>
+                                                <Text fontSize="sm" color="gray.500">{new Date(item.updatedAt).toLocaleString()}</Text>
+                                                {item.isUpdated ? <Text fontSize="sm" color="gray.500" alignSelf="flex-end">Edited</Text> : null}
+                                            </VStack>
+                                        </HStack>
+                                        <VStack p={2}>
+                                            <Text fontSize="md">{item.description}</Text>
+                                        </VStack>
+                                        <HStack p={2} space={6} >
+                                            <HStack space={2}>
+                                                {loggedInUser?.id === item.user.id ? <EditPostModal post={item} onRefresh={onRefresh} /> : null}
+                                            </HStack>
+                                            <HStack space={2} >
+                                                <Text fontSize="md" bold>Comments</Text>
+                                                <Text fontSize="md" bold>{item.postComments.length}</Text>
+                                            </HStack>
+                                            <HStack space={2} >
+                                                <Pressable onPress={() => item.liked ? unLikePost(item.id) : likePost(item.id)}>
+                                                    <AntDesign name={item.liked ? "heart" : "hearto"} size={24} color={item.liked ? "red" : "black"} />
+                                                    <Text fontSize="md" bold>{item.likes}</Text>
+                                                </Pressable>
+                                            </HStack>
+                                        </HStack>
+                                    </Box>
+                                </View>
 
+                            )}
+                                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+                            />
+                        </Box>
+                    </Center>
+                }
+            </View>
         </NativeBaseProvider>
 
     )

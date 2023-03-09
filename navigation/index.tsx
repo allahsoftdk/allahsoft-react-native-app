@@ -9,8 +9,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme, useFocusEffect } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName, StyleSheet, Alert } from 'react-native';
-import { Box, Center, Container, Heading, HStack, Link, Pressable, Row, Text, View } from 'native-base';
+import { ColorSchemeName, StyleSheet } from 'react-native';
+import { Box, Center, Pressable, View } from 'native-base';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
