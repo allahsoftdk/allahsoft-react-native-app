@@ -1,12 +1,12 @@
 {
   "cli": {
-    "version": ">= 3.7.0"
+    "version": ">= 3.7.2"
   },
   "build": {
     "development": {
       "distribution": "internal",
       "android": {
-        "gradleCommand": ":app:assembleDebug"
+        "gradleCommand": ":app:assembleRelease"
       },
       "ios": {
         "buildConfiguration": "Debug",

@@ -12,7 +12,7 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
   const [nextEvent, setNextEvent] = React.useState<any>(undefined);
   const [eventsFailed, setEventsFailed] = React.useState<boolean>(false);
   const [alarmsFailed, setAlarmsFailed] = React.useState<boolean>(false);
-
+  const colorScheme = useColorScheme();
 
   useEffect(() => {
     axiosInstance.get("api/prayer_alarm").then((res) => {
@@ -40,8 +40,6 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
       console.log(err);
     });
   }, []);
-
-  const colorScheme = useColorScheme();
 
   return (
     <View backgroundColor={colorScheme === "dark" ? "gray.800" : "white"} flex={1}>

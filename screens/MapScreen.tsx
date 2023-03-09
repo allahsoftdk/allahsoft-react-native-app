@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react';
 import { StyleSheet, View, Dimensions } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
@@ -252,7 +251,7 @@ export default class MapScreen extends React.Component<any, any> {
                         latitudeDelta: LATITUDE_DELTA,
                         longitudeDelta: LONGITUDE_DELTA,
                     }}>
-                    {this.state.markers.map(marker => (
+                    {this.state.markers.map((marker: { coordinates: { latitude: any; longitude: any; }; title: string | undefined; }) => (
                         <Marker
                             key={marker.coordinates.latitude + marker.coordinates.longitude}
                             coordinate={marker.coordinates}

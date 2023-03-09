@@ -1,7 +1,7 @@
 export default {
-  name: "allahsoft-react-native-app",
-  slug: "allahsoft-react-native-app",
-  version: "1.0.1",
+  name: "allahsoft",
+  slug: "allahsoft",
+  version: "1.0.2",
   orientation: "portrait",
   icon: "./assets/images/allahsoft-icon.png",
   scheme: "myapp",
@@ -36,7 +36,7 @@ export default {
   },
   extra: {
     eas: {
-      projectId: "f5a2a61d-bf28-4961-a1a5-7bb206749919",
+      projectId: "70199505-e38d-4b3b-aef2-9132802773a6",
     },
     ENVIRONMENT: process.env.ENVIRONMENT,
   },
