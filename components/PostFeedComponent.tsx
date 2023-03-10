@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import axiosInstance from "../utils/axios";
-import { Box, FlatList, Heading, HStack, VStack, Text, Spacer, View, Input, Button } from "native-base";
+import { Box, FlatList, Heading, HStack, VStack, Text, Spacer, View, Input, Button, Center } from "native-base";
 import { Post, User } from "../types";
 import { ActivityIndicator, RefreshControl, TouchableOpacity, StyleSheet, useColorScheme } from "react-native";
 import { globalStyles } from "../styles/globalStyles";
@@ -101,33 +101,37 @@ const PostFeedComponent = () => {
             </HStack>
             <FlatList contentContainerStyle={scrollStyle} data={posts} renderItem={({ item }) => (
                 <View p={2}>
-                    <Box width={350} borderWidth={1} borderColor={"#165d31"} borderRadius={8} background={"white"} >
-                        <HStack p={2}>
-                            <VStack ml={2}>
-                                <Text fontSize="md" bold>{item.user.name}</Text>
-                            </VStack>
-                            <Spacer />
-                            <VStack mr={2}>
-                                <Text fontSize="sm" color="gray.500">{new Date(item.updatedAt).toLocaleString()}</Text>
-                                {item.isUpdated ? <Text fontSize="sm" color="gray.500" alignSelf="flex-end">Edited</Text> : null}
-                            </VStack>
-                        </HStack>
-                        <VStack p={2}>
-                            <Text fontSize="md">{item.description}</Text>
-                        </VStack>
-                        <HStack p={2} space={6} >
-                            <HStack space={2}>
-                                {loggedInUser?.id === item.user.id ? <EditPostModal post={item} onRefresh={onRefresh} /> : null}
-                            </HStack>
-                            <HStack space={2} >
-                                <Text fontSize="md" bold>Comments</Text>
-                                <Text fontSize="md" bold>{item.postComments.length}</Text>
-                            </HStack>
-                            <HStack space={2} >
-                                <Text fontSize="md" bold>Likes</Text>
-                            </HStack>
-                        </HStack>
-                    </Box>
+                    <Center>
+                        <Box width={325} borderWidth={1} borderColor={"#165d31"} borderRadius={8} background={"white"} >
+                            <Center>
+                                <HStack p={2}>
+                                    <VStack ml={2}>
+                                        <Text fontSize="md" bold>{item.user.name}</Text>
+                                    </VStack>
+                                    <Spacer />
+                                    <VStack mr={2}>
+                                        <Text fontSize="sm" color="gray.500">{new Date(item.updatedAt).toLocaleString()}</Text>
+                                        {item.isUpdated ? <Text fontSize="sm" color="gray.500" alignSelf="flex-end">Edited</Text> : null}
+                                    </VStack>
+                                </HStack>
+                                <VStack p={2}>
+                                    <Text fontSize="md">{item.description}</Text>
+                                </VStack>
+                                <HStack p={2} space={6} >
+                                    <HStack space={2}>
+                                        {loggedInUser?.id === item.user.id ? <EditPostModal post={item} onRefresh={onRefresh} /> : null}
+                                    </HStack>
+                                    <HStack space={2} >
+                                        <Text fontSize="md" bold>Comments</Text>
+                                        <Text fontSize="md" bold>{item.postComments.length}</Text>
+                                    </HStack>
+                                    <HStack space={2} >
+                                        <Text fontSize="md" bold>Likes</Text>
+                                    </HStack>
+                                </HStack>
+                            </Center>
+                        </Box>
+                    </Center>
                 </View>
 
             )}
