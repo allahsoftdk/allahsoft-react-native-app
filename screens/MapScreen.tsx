@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Dimensions } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { useColorScheme } from "react-native";
+import Constants from "expo-constants";
+import { Box, Center, NativeBaseProvider, Text } from "native-base";
 
 export default function MapScreen() {
     const [width, setWidth] = useState(Dimensions.get('window').width);
@@ -11,6 +13,7 @@ export default function MapScreen() {
     const [LONGITUDE, setLongitude] = useState(10.4024);
     const [LATITUDE_DELTA, setLATITUDE_DELTA] = useState(0.0922);
     const [LONGITUDE_DELTA, setLONGITUDE_DELTA] = useState(LATITUDE_DELTA * ASPECT_RATIO);
+    const production = Constants.expoConfig?.extra?.ENVIRONMENT === 'production' ? true : false;
     const [markers, setMarkers] = useState([
         {
             title: 'Det Islamiske Trossamfund på Fyn',
@@ -234,25 +237,29 @@ export default function MapScreen() {
     const colorScheme = useColorScheme();
 
     return (
-        <View style={[styles.container, { backgroundColor: colorScheme === "dark" ? "gray.800" : "white" }]} accessible>
-            <MapView
-                provider={PROVIDER_GOOGLE}
-                style={styles.map}
-                initialRegion={{
-                    latitude: LATITUDE,
-                    longitude: LONGITUDE,
-                    latitudeDelta: LATITUDE_DELTA,
-                    longitudeDelta: LONGITUDE_DELTA,
-                }}>
-                {markers.map(marker => (
-                    <Marker
-                        key={marker.coordinates.latitude + marker.coordinates.longitude}
-                        coordinate={marker.coordinates}
-                        title={marker.title}
-                    />
-                ))}
-            </MapView>
-        </View>
+        <NativeBaseProvider>
+            {production ? <Text style={{ color: colorScheme === "dark" ? "white" : "black" }}>This feature is currently not available in the production environment</Text> :
+                <View style={styles.container} accessible>
+                    <MapView
+                        provider={PROVIDER_GOOGLE}
+                        style={styles.map}
+                        initialRegion={{
+                            latitude: LATITUDE,
+                            longitude: LONGITUDE,
+                            latitudeDelta: LATITUDE_DELTA,
+                            longitudeDelta: LONGITUDE_DELTA,
+                        }}>
+                        {markers.map(marker => (
+                            <Marker
+                                key={marker.coordinates.latitude + marker.coordinates.longitude}
+                                coordinate={marker.coordinates}
+                                title={marker.title}
+                            />
+                        ))}
+                    </MapView>
+                </View>
+            }
+        </NativeBaseProvider>
     );
 }
 
