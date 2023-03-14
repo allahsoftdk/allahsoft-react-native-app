@@ -7,12 +7,12 @@ import React from "react";
 
 const Stack = createNativeStackNavigator();
 
-const ForumScreen = ({ navigation }: { navigation: any }) => {
+const ForumScreen = ({ navigation, route }: { navigation: any, route: any }) => {
     const colorScheme = useColorScheme();
 
     return (
         <View backgroundColor={colorScheme === "dark" ? "gray.800" : "white"} flex={1}>
-            <PostFeedComponent />
+            <PostFeedComponent navigation={navigation} route={route} />
         </View>
     )
 };

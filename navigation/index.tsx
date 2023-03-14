@@ -36,6 +36,7 @@ import MessageScreen from "../screens/MessageScreen";
 import QuranChapterScreen from "../screens/QuranChapterScreen";
 import SearchScreen from "../screens/SearchScreen";
 import UserProfileScreen from "../screens/UserProfileScreen";
+import PostScreen from "../screens/PostScreen";
 
 import { globalStyles } from "../styles/globalStyles";
 
@@ -83,7 +84,8 @@ function RootNavigator() {
       <Stack.Screen name="MessageTab" component={MessageScreen} options={{ title: 'Messages' }} />
       <Stack.Screen name="SearchTab" component={SearchScreen} options={{ title: 'Search' }} />
       <Stack.Screen name="UserProfileTab" component={UserProfileScreen} options={{ title: 'User Profile' }} />
-      <Stack.Screen name="QuranChapterTab" component={QuranChapterScreen} options={{ title: 'Quran chapter: ' }} />
+      <Stack.Screen name="QuranChapterTab" component={QuranChapterScreen} options={{ title: 'Quran chapter ' }} />
+      <Stack.Screen name="PostTab" component={PostScreen} options={{ title: 'Post' }} />
     </Stack.Navigator>
   );
 }

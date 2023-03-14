@@ -21,18 +21,12 @@ const UserProfileScreen = ({ navigation, route }: { navigation: any, route: any 
     const [loadPostsDone, setLoadPostsDone] = useState<boolean>(false);
     const [loadFollowersDone, setLoadFollowersDone] = useState<boolean>(false);
     const [loadIsFollowingDone, setLoadIsFollowingDone] = useState<boolean>(false);
-    const [postLikes, setPostLikes] = useState<any>([]);
 
     useEffect(() => {
         const getLoggedInUser = async () => {
-            try {
-                const value = await AsyncStorage.getItem('user');
-
-                if (value !== null) {
-                    setLoggedInUser(JSON.parse(value));
-                }
-            } catch (error) {
-                console.log(error);
+            const user = await AsyncStorage.getItem("user");
+            if (user) {
+                setLoggedInUser(JSON.parse(user));
             }
         };
         getLoggedInUser();
@@ -45,6 +39,7 @@ const UserProfileScreen = ({ navigation, route }: { navigation: any, route: any 
     }, [loggedInUser]);
 
     useEffect(() => {
+        if (!loggedInUser) { return; }
         axiosInstance.get(`/api/user/followers/${loggedInUser?.id}`).then((res) => {
             setLoadIsFollowingDone(true);
             res.data.forEach((following: any) => {
@@ -53,7 +48,7 @@ const UserProfileScreen = ({ navigation, route }: { navigation: any, route: any 
                 }
             });
         }).catch((err) => {
-            // console.log(err);
+            console.log(err);
         });
     }, [loggedInUser]);
 
@@ -102,26 +97,42 @@ const UserProfileScreen = ({ navigation, route }: { navigation: any, route: any 
 
     React.useEffect(() => {
         axiosInstance.get(`/api/post/user/${user.id}`).then((res) => {
+            for (let i = 0; i < res.data.length; i++) {
+                res.data[i].likedBy.forEach((user: any) => {
+                    if (user.id === loggedInUser?.id) {
+                        res.data[i].likedByLoggedInUser = true;
+                    }
+                });
+            }
             setPosts(res.data);
             setLoadPostsDone(true);
         }).catch((err) => {
             setErrorMessage(err.response.data.message);
             console.log(err);
         });
+    }, [loggedInUser]);
+
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 1500);
     }, []);
 
     const likePost = (postId: number) => {
         axiosInstance.post(`/api/post/like/${postId}`).then((res) => {
             setPosts(posts.map((post: any) => {
                 if (post.id === postId) {
-                    if (post.postLikes.find((like: any) => like.userId === loggedInUser?.id)) {
-                        return { ...post, postLikes: post.postLikes.filter((like: any) => like.userId !== loggedInUser?.id) }
+                    if (post.likedByLoggedInUser) {
+                        post.likes = post.likes - 1;
+                        post.likedByLoggedInUser = false;
                     } else {
-                        return { ...post, postLikes: [...post.postLikes, { userId: loggedInUser?.id }] }
+                        post.likes = post.likes + 1;
+                        post.likedByLoggedInUser = true;
                     }
-                } else {
-                    return post;
                 }
+                return post;
             }));
         }).catch((err) => {
             setErrorMessage(err.response.data.message);
@@ -133,14 +144,15 @@ const UserProfileScreen = ({ navigation, route }: { navigation: any, route: any 
         axiosInstance.put(`/api/post/unlike/${postId}`).then((res) => {
             setPosts(posts.map((post: any) => {
                 if (post.id === postId) {
-                    if (post.postLikes.find((like: any) => like.userId === loggedInUser?.id)) {
-                        return { ...post, postLikes: post.postLikes.filter((like: any) => like.userId !== loggedInUser?.id) }
+                    if (post.likedByLoggedInUser) {
+                        post.likes = post.likes - 1;
+                        post.likedByLoggedInUser = false;
                     } else {
-                        return { ...post, postLikes: [...post.postLikes, { userId: loggedInUser?.id }] }
+                        post.likes = post.likes + 1;
+                        post.likedByLoggedInUser = true;
                     }
-                } else {
-                    return post;
                 }
+                return post;
             }));
         }).catch((err) => {
             setErrorMessage(err.response.data.message);
@@ -148,18 +160,12 @@ const UserProfileScreen = ({ navigation, route }: { navigation: any, route: any 
         });
     };
 
-    const onRefresh = React.useCallback(() => {
-        setRefreshing(true);
-        setTimeout(() => {
-            setRefreshing(false);
-        }, 1500);
-    }, []);
 
     const colorScheme = useColorScheme();
     return (
         <NativeBaseProvider>
             <View backgroundColor={colorScheme === "dark" ? "gray.800" : "white"} flex={1}>
-                {!loadFollowersDone || !loadIsFollowingDone || !loadPostsDone ? <Center flex={1}><ActivityIndicator size="large" color="#165d31" /></Center> :
+                {!loadFollowersDone || !loadIsFollowingDone || !loadPostsDone || !posts ? <Center flex={1}><ActivityIndicator size="large" color="#165d31" /></Center> :
                     <Center>
                         <Box alignItems="center" paddingTop={10} >
                             <HStack>
@@ -199,20 +205,21 @@ const UserProfileScreen = ({ navigation, route }: { navigation: any, route: any 
                                             <HStack space={2}>
                                                 {loggedInUser?.id === item.user.id ? <EditPostModal post={item} onRefresh={onRefresh} /> : null}
                                             </HStack>
-                                            <HStack space={2} >
-                                                <Text fontSize="md" bold>Comments</Text>
-                                                <Text fontSize="md" bold>{item.postComments.length}</Text>
-                                            </HStack>
-                                            <HStack space={2} >
-                                                <Pressable onPress={() => item.liked ? unLikePost(item.id) : likePost(item.id)}>
-                                                    <AntDesign name={item.liked ? "heart" : "hearto"} size={24} color={item.liked ? "red" : "black"} />
+                                            <Pressable onPress={() => navigation.navigate('PostTab', { item: item })}>
+                                                <HStack space={2} >
+                                                    <Text fontSize="md" bold>Comments</Text>
+                                                    <Text fontSize="md" bold>{item.postComments.length}</Text>
+                                                </HStack>
+                                            </Pressable>
+                                            <Pressable onPress={() => item.likedByLoggedInUser ? unLikePost(item.id) : likePost(item.id)}>
+                                                <HStack space={2} >
+                                                    <AntDesign name={item.likedByLoggedInUser ? "heart" : "hearto"} size={24} color="red" />
                                                     <Text fontSize="md" bold>{item.likes}</Text>
-                                                </Pressable>
-                                            </HStack>
+                                                </HStack>
+                                            </Pressable>
                                         </HStack>
                                     </Box>
                                 </View>
-
                             )}
                                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
                             />
