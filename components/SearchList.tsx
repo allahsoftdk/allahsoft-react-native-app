@@ -1,7 +1,6 @@
 import React from "react";
 import {
     StyleSheet,
-    Text,
     View,
     FlatList,
     SafeAreaView,
@@ -28,7 +27,7 @@ const SearchList = ({ searchPhrase, users, setClicked, navigation, setRefreshing
         setRefreshing(true);
         setTimeout(() => {
             setRefreshing(false);
-        }, 2000);
+        }, 1500);
     }, []);
 
     const renderItem = (item: ListRenderItemInfo<User>) => {

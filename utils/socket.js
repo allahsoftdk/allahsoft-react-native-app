@@ -1,14 +1,12 @@
 import { io } from "socket.io-client";
+import Constants from "expo-constants";
 
 const socket =
-  process.env.NODE_ENV === "production"
+  Constants.expoConfig.extra.ENVIRONMENT === "production"
     ? io("https://admin.allahsoft.dk")
     : // Alias for the ip of the host machine
-      io("http://10.0.2.2:80");
+    io("http://10.142.120.11");
 
-socket.onAny((event, ...args) => {
-  console.log(event, args);
-});
 socket.on("connect", () => {
   console.log("Connected to socket server");
 });

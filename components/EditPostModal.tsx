@@ -1,10 +1,10 @@
-import React from "react";
-import { Button, Modal, FormControl, Input, Center, NativeBaseProvider } from "native-base";
+import { Button, Modal, FormControl, Input, Center } from "native-base";
 import { useState } from "react";
 import { Post } from "../types";
 import axiosInstance from "../utils/axios";
 import { globalStyles } from "../styles/globalStyles";
 import { Keyboard } from 'react-native';
+import React from "react";
 
 const EditPostModal = ({ post, onRefresh }: { post: Post, onRefresh: () => void }) => {
     const [showModal, setShowModal] = useState(false);
@@ -21,7 +21,7 @@ const EditPostModal = ({ post, onRefresh }: { post: Post, onRefresh: () => void 
     };
 
     return <Center>
-        <Button onPress={() => setShowModal(true)} style={globalStyles.greenColor} size="sm" variant="solid" position="absolute" right="0" top="0" zIndex={1}> Edit </Button>
+        <Button onPress={() => setShowModal(true)} style={globalStyles.greenColor} > Edit </Button>
         <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
             <Modal.Content maxWidth="400px">
                 <Modal.CloseButton />
@@ -52,10 +52,6 @@ const EditPostModal = ({ post, onRefresh }: { post: Post, onRefresh: () => void 
 
 export default ({ post, onRefresh }: { post: Post, onRefresh: () => void }) => {
     return (
-        <NativeBaseProvider>
-            <Center flex={1} px="3">
-                <EditPostModal post={post} onRefresh={onRefresh} />
-            </Center>
-        </NativeBaseProvider>
+        <EditPostModal post={post} onRefresh={onRefresh} />
     );
 };

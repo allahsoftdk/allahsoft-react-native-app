@@ -20,8 +20,10 @@ export default function TabTwoScreen() {
 
   if (Platform.OS === 'web') {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ color: colorScheme === 'dark' ? 'white' : 'black' }}>Sorry, the compass dosen't work on web.</Text>
+      <View backgroundColor={colorScheme === "dark" ? "gray.800" : "white"} flex={1}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <Text style={{ color: colorScheme === 'dark' ? 'white' : 'black' }}>Sorry, the compass dosen't work on web.</Text>
+        </View>
       </View>
     );
   }
@@ -107,54 +109,56 @@ export default function TabTwoScreen() {
   }, [isOnPoint]);
 
   return (
-    <Grid style={{ backgroundColor: 'White' }}>
-      <Row style={{ alignItems: 'center' }} size={.9}>
-        <Col style={{ alignItems: 'center' }}>
-          <Text
-            style={{
-              color: colorScheme === 'dark' ? 'white' : 'black',
-              fontSize: height / 26,
-              fontWeight: 'bold'
-            }}>
-            {_degree(magnetometer)}°
+    <View backgroundColor={colorScheme === "dark" ? "gray.800" : "white"} flex={1}>
+      <Grid style={{ backgroundColor: 'White' }}>
+        <Row style={{ alignItems: 'center' }} size={.9}>
+          <Col style={{ alignItems: 'center' }}>
+            <Text
+              style={{
+                color: colorScheme === 'dark' ? 'white' : 'black',
+                fontSize: height / 26,
+                fontWeight: 'bold'
+              }}>
+              {_degree(magnetometer)}°
+            </Text>
+          </Col>
+        </Row>
+        <Row style={{ alignItems: 'center' }} size={.1}>
+          <Col style={{ alignItems: 'center' }}>
+            <View style={{ position: 'absolute', width: width, alignItems: 'center', top: -30 }}>
+              <Image source={isOnPoint ? compassOnPoint : compassNormal}
+                style={{ height: 60, width: 60, resizeMode: 'contain' }} />
+            </View>
+          </Col>
+        </Row>
+        <Row style={{ alignItems: 'center' }} size={2}>
+          <Text style={{
+            color: colorScheme === 'dark' ? 'white' : 'black',
+            fontSize: height / 27,
+            width: width,
+            position: 'absolute',
+            textAlign: 'center'
+          }}>
+            {errorMsg !== null && errorMsg !== undefined ? 'N/A' : `${qiblaFromTrueNorth}°`}
           </Text>
-        </Col>
-      </Row>
-      <Row style={{ alignItems: 'center' }} size={.1}>
-        <Col style={{ alignItems: 'center' }}>
-          <View style={{ position: 'absolute', width: width, alignItems: 'center', top: -30 }}>
-            <Image source={isOnPoint ? compassOnPoint : compassNormal}
-              style={{ height: 60, width: 60, resizeMode: 'contain' }} />
-          </View>
-        </Col>
-      </Row>
-      <Row style={{ alignItems: 'center' }} size={2}>
-        <Text style={{
-          color: colorScheme === 'dark' ? 'white' : 'black',
-          fontSize: height / 27,
-          width: width,
-          position: 'absolute',
-          textAlign: 'center'
-        }}>
-          {errorMsg !== null && errorMsg !== undefined ? 'N/A' : `${qiblaFromTrueNorth}°`}
-        </Text>
-        <Col style={{ alignItems: 'center' }}>
-          <Image
-            source={compassImageSource}
-            style={{
-              height: width - 80,
-              justifyContent: 'center',
-              alignItems: 'center',
-              resizeMode: 'contain',
-              transform: [{ rotate: 360 - magnetometer + 'deg' }]
-            }} />
-        </Col>
-      </Row>
-      <Row style={{ alignItems: 'center' }} size={1}>
-        <Col style={{ alignItems: 'center' }}>
-          <Text style={{ color: colorScheme === 'dark' ? 'white' : 'black' }}>{errorMsg ?? `Copyright Allahsoft`}</Text>
-        </Col>
-      </Row>
-    </Grid>
+          <Col style={{ alignItems: 'center' }}>
+            <Image
+              source={compassImageSource}
+              style={{
+                height: width - 80,
+                justifyContent: 'center',
+                alignItems: 'center',
+                resizeMode: 'contain',
+                transform: [{ rotate: 360 - magnetometer + 'deg' }]
+              }} />
+          </Col>
+        </Row>
+        <Row style={{ alignItems: 'center' }} size={1}>
+          <Col style={{ alignItems: 'center' }}>
+            <Text style={{ color: colorScheme === 'dark' ? 'white' : 'black' }}>{errorMsg ?? `Copyright Allahsoft`}</Text>
+          </Col>
+        </Row>
+      </Grid>
+    </View>
   );
 }

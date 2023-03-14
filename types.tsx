@@ -34,6 +34,7 @@ export type RootStackParamList = {
   SearchTab: undefined;
   UserProfileTab: undefined;
   QuranChapterTab: undefined;
+  PostTab: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
@@ -59,6 +60,7 @@ export type RootTabParamList = {
   SearchTab: undefined;
   UserProfileTab: undefined;
   QuranChapterTab: undefined;
+  PostTab: undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<
@@ -127,14 +129,22 @@ export type QuranVerse = {
   data: Data;
 }
 
-export type PrayerTimes = {
-  city: string;
-  date: string;
+export type PrayerTime = {
   today: [string, string][];
   tomorrow: [string, string][];
 };
 
+export type Event = {
+  id: number
+  name: string
+  eventDate: string
+  eventFrom: string
+  eventTo: string
+};
+
+
 export type ChatMessage = {
+  id: Number;
   chatRoomId: number;
   userId: number;
   message: string;
@@ -181,6 +191,7 @@ export type Post = {
   createdAt: Date;
   updatedAt: Date;
   isUpdated: Boolean;
+  likes: Number;
 };
 
 export type Role = {
